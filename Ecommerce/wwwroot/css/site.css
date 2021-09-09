@@ -1,0 +1,154 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+/* Vertical menu
+-------------------------------------------------- */
+#menuVertical {
+    width: 100%;
+    height: auto;
+    z-index: 15;
+    float: left;
+    position: relative;
+}
+
+    #menuVertical ul {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        position: relative;
+    }
+
+        #menuVertical ul li {
+            display: block;
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+            #menuVertical ul li a {
+                position: relative;
+                display: block;
+                width: 100%;
+                height: auto;
+                box-sizing: border-box;
+                font-size: 13px;
+                text-transform: uppercase;
+                font-weight: bold;
+                color: #56606b;
+                line-height: 1.2em;
+                padding: 10px 15px;
+                background: #f3f3f3;
+                border-top: 1px solid #aab8bf;
+                text-decoration: none;
+            }
+
+            #menuVertical ul li:first-child a {
+                border: 0px;
+            }
+
+            #menuVertical ul li:hover a {
+                background: #f3f3f3;
+            }
+
+            #menuVertical ul li a:hover {
+                background: #e8e8e8;
+            }
+
+            #menuVertical ul li ul {
+                position: absolute;
+                top: 0px;
+                left: 100%;
+                display: none;
+                width: auto;
+            }
+            /*******показываем выпадашку при наведении ********/
+            #menuVertical ul li:hover ul {
+                display: block;
+            }
+
+            #menuVertical ul li ul li {
+                width: 250px; /*фиксированная ширина выпадашки*/
+            }
+
+                #menuVertical ul li ul li a {
+                    white-space: nowrap;
+                    text-transform: none;
+                    padding: 5px 20px;
+                }
+
+                    #menuVertical ul li ul li a:hover {
+                        background: #e8e8e8;
+                        color: #56606b;
+                    }
