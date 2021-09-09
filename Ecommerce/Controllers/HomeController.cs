@@ -34,11 +34,12 @@ namespace Ecommerce.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
-        public IActionResult CartAmmount(string b)
+        
+        public IActionResult CartAmmount()
         {
-            int a = Int32.Parse(b);
-            return PartialView(a);
+            Cart cart = new Cart();
+            cart.Text = "Привет";
+            return View(cart);
         }
     }
 }
