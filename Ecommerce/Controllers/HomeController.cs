@@ -42,5 +42,11 @@ namespace Ecommerce.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public ActionResult UpdateShopingCart(Cart cart)
+        {
+            cart.Ammount = 4;
+            return PartialView(cart);
+        }
+
     }
 }
