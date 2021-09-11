@@ -20,12 +20,20 @@ namespace Ecommerce.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            Cart cart = new Cart();
+            cart.Text = "Привет";
+            cart.Ammount = 5;
+            return View(cart);
+            //return View();
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            Cart cart = new Cart();
+            cart.Text = "Привет";
+            cart.Ammount = 5;
+            return View(cart);
+            //return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -34,12 +42,5 @@ namespace Ecommerce.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        
-        public IActionResult CartAmmount()
-        {
-            Cart cart = new Cart();
-            cart.Text = "Привет";
-            return View(cart);
-        }
     }
 }
