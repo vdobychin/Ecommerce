@@ -2,8 +2,15 @@
 
 <div>
     <form asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
-        <img src="~/images/shopping-cart.png" />
-        <span>@Model.Ammount</span>
+        <div>
+            <img src="~/images/shopping-cart.png" width="30" />
+            <span>@Model.Ammount</span>
+        </div>
+        @*
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+        *@
     </form>
 </div>
 

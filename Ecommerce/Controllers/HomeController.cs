@@ -21,10 +21,8 @@ namespace Ecommerce.Controllers
         public IActionResult Index()
         {
             Cart cart = new Cart();
-            cart.Text = "Привет";
-            cart.Ammount = 5;
+            cart.Ammount = 4;
             return View(cart);
-            //return View();
         }
 
         public IActionResult Privacy()
@@ -44,8 +42,8 @@ namespace Ecommerce.Controllers
 
         public ActionResult UpdateShopingCart(Cart cart)
         {
-            cart.Ammount = 4;
-            return PartialView(cart);
+            cart.Ammount = 6;
+            return PartialView("_ShowCartPartialView", cart);
         }
 
     }
