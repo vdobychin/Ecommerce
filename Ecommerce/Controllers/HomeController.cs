@@ -20,17 +20,17 @@ namespace Ecommerce.Controllers
 
         public IActionResult Index()
         {
-            Cart cart = new Cart();
-            cart.Ammount = 4;
+            ShopCartItem cart = new ShopCartItem();
+            cart.Quantity = 4;
             return View(cart);
         }
 
         public IActionResult Privacy()
         {
-            Cart cart = new Cart();
-            cart.Text = "Привет";
-            cart.Ammount = 5;
-            return View(cart);
+            ShopCartItem shopCartItem = new ShopCartItem();
+            //shopCartItem.Text = "Привет";
+            shopCartItem.Quantity = 5;
+            return View(shopCartItem);
             //return View();
         }
 
@@ -40,10 +40,10 @@ namespace Ecommerce.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public ActionResult UpdateShopingCart(Cart cart)
+        public ActionResult UpdateShopingCart(ShopCartItem shopCartItem)
         {
-            cart.Ammount = 6;
-            return PartialView("_ShowCartPartialView", cart);
+            shopCartItem.Quantity = 6;
+            return PartialView("_ShowCartPartialView", shopCartItem);
         }
 
     }
