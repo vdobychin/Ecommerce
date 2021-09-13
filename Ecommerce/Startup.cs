@@ -27,7 +27,7 @@ namespace Ecommerce
             services.AddSession();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppDBContext>(options => options.UseSqlite(connection));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlite(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +40,6 @@ namespace Ecommerce
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

@@ -16,4 +16,10 @@
 </div>
 
 <partial name="CartAmmount" model="Model" />
-@*@Html.Partial("CartAmmount", Model)*@
+
+@foreach(var shopCartItem in ViewBag.shopCartItems)
+{
+    <tr>
+        <td>@shopCartItem.Id</td>
+    </tr>
+}

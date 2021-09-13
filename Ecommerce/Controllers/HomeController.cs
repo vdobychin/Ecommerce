@@ -1,34 +1,36 @@
-﻿using Ecommerce.Models;
+﻿using Ecommerce.Data;
+using Ecommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private DatabaseContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> _logger, DatabaseContext _db)
         {
-            _logger = logger;
+            logger = _logger;
+            db = _db;
         }
 
         public IActionResult Index()
         {
             ShopCartItem cart = new ShopCartItem();
             cart.Quantity = 4;
+
+            ViewBag.shopCartItems = db.ShopCartItems.ToList();
+
             return View(cart);
         }
 
         public IActionResult Privacy()
         {
             ShopCartItem shopCartItem = new ShopCartItem();
-            //shopCartItem.Text = "Привет";
             shopCartItem.Quantity = 5;
             return View(shopCartItem);
             //return View();
@@ -43,7 +45,7 @@ namespace Ecommerce.Controllers
         public ActionResult UpdateShopingCart(ShopCartItem shopCartItem)
         {
             shopCartItem.Quantity = 6;
-            return PartialView("_ShowCartPartialView", shopCartItem);
+            return PartialView("_ShowCart", shopCartItem);
         }
 
     }

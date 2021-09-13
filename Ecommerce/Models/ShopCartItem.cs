@@ -8,7 +8,7 @@ namespace Ecommerce.Models
     {
         [Key]
         public int Id { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string ShopCartId { get; set; }
 
