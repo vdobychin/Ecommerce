@@ -1,0 +1,100 @@
+﻿@model Ecommerce.Models.Line.MonofilamentLine
+
+<div id="modal-container" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<div class="col-lg-2">
+    <div class="product-item">
+        <div class="aa">
+            <img src="@Model.img">
+        </div>
+        <div class="product-list">
+            @if (Model.SubCatalogId == 1)
+            {
+            <div class="div_name">
+                @*<a href="/Hdd/HddOneProduct/@Model.Id">@Model.Name</a>*@
+            </div>
+            }
+            <span class="price">Цена: @Model.Price.ToString("c")</span>
+            @*<a class="btn btn-success" asp-action="VerificationAddToCart" asp-controller="ShopCart" asp-route-id="@Model.ProductId" data-target="#modal-container" data-toggle="modal">Добавить в корзину</a>*@
+            @*@Html.ActionLink("В корзину", "ShopCart", "Details", new { id = @Model.ProductId }, new { data_target = "#modal-container", data_toggle = "modal" })*@
+        </div>
+    </div>
+</div>
+
+
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .product-item {
+        width: 200px;
+        /*height: 200px;*/
+        text-align: center;
+        margin: 0 auto;
+        border-bottom: 2px solid #F5F5F5;
+        background: white;
+        font-family: "Open Sans";
+        transition: .3s ease-in;
+    }
+
+        .product-item:hover {
+            border-bottom: 2px solid #fc5a5a;
+        }
+
+    .aa {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .aa img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+    .product-list {
+        background: #fafafa;
+        padding: 15px 0; /* Поля вокруг текста */
+    }
+
+    .div_name {
+        overflow: hidden;
+        height: 50px;
+    }
+
+        .div_name:before {
+            content: "";
+        }
+
+    .price {
+        font-size: 16px;
+        color: #fc5a5a;
+        display: block;
+        margin-bottom: 12px;
+    }
+
+    .button {
+        text-decoration: none;
+        display: inline-block;
+        padding: 0 12px;
+        background: #cccccc;
+        color: white;
+        text-transform: uppercase;
+        font-size: 12px;
+        line-height: 28px;
+        transition: .3s ease-in;
+    }
+
+    .product-item:hover .button {
+        background: #fc5a5a;
+    }
+</style>

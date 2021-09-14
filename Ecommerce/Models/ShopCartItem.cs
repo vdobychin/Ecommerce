@@ -11,9 +11,5 @@ namespace Ecommerce.Models
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string ShopCartId { get; set; }
-
-        //[Key]
-        public int ProductId { get; set; }
-        //public Product product { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
+using Ecommerce.Models.Line;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -22,9 +23,7 @@ namespace Ecommerce.Controllers
         {
             ShopCartItem cart = new ShopCartItem();
             cart.Quantity = 4;
-
-            ViewBag.shopCartItems = db.ShopCartItems.ToList();
-
+            ViewBag.monofilamentLines = db.MonofilamentLines.ToList();
             return View(cart);
         }
 
