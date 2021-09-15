@@ -49,6 +49,7 @@ namespace Ecommerce.Controllers
             return PartialView("_ShowCart", shopCartItem);
         }
 
+        /*
         public IActionResult VerificationAddToCart(int id)
         {
             var item = db.Products.FirstOrDefault(i => i.Id == id);
@@ -56,5 +57,6 @@ namespace Ecommerce.Controllers
                 shopCart.AddToCart(item, 1);
             return PartialView(item);
         }
+        */
     }
 }

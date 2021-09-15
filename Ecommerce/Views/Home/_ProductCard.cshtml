@@ -1,17 +1,17 @@
 ﻿@model Product
 
-<div id="modal-container" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content"></div>
-    </div>
-</div>
-
 <div class="card" style="width: 18rem;">
     <img src="@Model.Img" class="card-img-top" alt="..." />
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
-        <a class="btn btn-success" asp-action="VerificationAddToCart" asp-controller="Home" asp-route-id="@Model.Id" data-target="#modal-container" data-toggle="modal">Добавить в корзину</a>
+        
+        <div>
+            <form method="post" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
+                <input type="submit" class="btn btn-primary" value="Добавить в корзину" />
+            </form>
+        </div>
+        
+        
     </div>
 </div>
