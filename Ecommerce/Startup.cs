@@ -1,6 +1,8 @@
 using Ecommerce.Data;
+using Ecommerce.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,11 +22,15 @@ namespace Ecommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //Разная корзина для разных пользователей
+            services.AddScoped(sp => ShopCart.GetCart(sp));
+
             services.AddControllersWithViews();
             services.AddSession();
             //services.AddMvc();
             services.AddMemoryCache();
-            services.AddSession();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlite(connection));

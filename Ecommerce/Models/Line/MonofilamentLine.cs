@@ -7,6 +7,7 @@ namespace Ecommerce.Models.Line
     public class MonofilamentLine
     {
         [Key]
+        [ForeignKey("Id")]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Company { get; set; }
@@ -15,8 +16,6 @@ namespace Ecommerce.Models.Line
         public double BreakingLoad { get; set; }            //Разрывная нагрузка
         public string CountryManufacturing { get; set; }
         public string Color { get; set; }
-        public decimal Price { get; set; }
-        public string img { get; set; }
 
         public int CatalogId { get; set; }
         public Catalog Catalog { get; set; }

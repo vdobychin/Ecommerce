@@ -1,0 +1,223 @@
+﻿@model ShopCart
+
+
+<div class="container-fluid">
+    @if (Model.listShopItems.Count == 0)
+    {
+        <div style="margin-top: 20px; margin-bottom: 400px; font: normal 100%/2.1 PT Sans,Arial,sans-serif; font-size: 20px;">
+            <h4>
+                В Вашей корзине пока нет товаров.
+            </h4>
+            <a asp-controller="Home" asp-action="Index">Перейти к покупкам.</a>
+        </div>
+    }
+    else
+    {
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <h3><em>Ваша корзина</em></h3>
+            @*<form method="post">*@
+            <div class="row">
+                <div class="col-10">
+                    <div class="alert alert-warning">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Товар</th>
+                                    <th>Цена</th>
+                                    <th>Количество</th>
+                                    <th>Сумма</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            @foreach (var el in Model.listShopItems)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="imgrow">
+                                                <img src="@el.Product.Img" />
+                                            </div>
+                                        </td>
+
+                                        <td style="vertical-align:middle;">
+                                            <input type="hidden" id="id" name="id" value=@el.Id />
+                                        </td>
+
+                                        <td style="vertical-align:middle;"><b>@el.Product.Name (@el.Product.Mark)</b></td>
+                                        <td style="vertical-align:middle;"><b>@el.Price.ToString("c")</b></td>
+                                        <td style="vertical-align:middle;">
+                                            @*<input id="quantity" name="quantity" type="number" maxlength="2" min="1" value=@el.quantity.ToString() class="product_amount_control" onclick="location.href='@Url.Action("UpdateCard", "ShopCart", new { @id = el.Id, @quantity =  })'" />*@
+                                            <div class="def-number-input number-input safari_only">
+                                                @*<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus" asp-controller="ShopCart" asp-action="UpdateCard" asp-route-id="@el.Id" asp-route-quantity="@el.quantity"></button>
+                                                    <input id="quantity" name="quantity" class="quantity" min="1" value=@el.quantity.ToString() type="number">
+                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus" asp-controller="ShopCart" asp-action="UpdateCard" asp-route-id="@el.Id" asp-route-quantity="@el.quantity"></button>*@
+
+                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus" asp-controller="ShopCart" asp-action="UpdateCard"></button>
+                                                <input id="quantity" name="quantity" class="quantity" min="1" value=@el.Quantity.ToString() type="number">
+                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus" asp-controller="ShopCart" asp-action="UpdateCard"></button>
+                                                @*<a href="@Url.Action("UpdateCard", "ShopCart", new { @id = el.Id, @quantity = el.quantity })"><i class="fa fa-plus-circle"></i></a>
+                                                    <input id="quantity" name="quantity" class="quantity" min="1" value=@el.quantity.ToString() type="number">
+                                                    <a href="@Url.Action("UpdateCard", "ShopCart", new { @id = el.Id, @quantity = el.quantity })"><i class="fa fa-minus-circle"></i></a>*@
+                                            </div>
+                                        </td>
+
+                                        <td style="vertical-align:middle;"><b>@((el.Quantity * el.Price).ToString("c"))</b></td>
+                                        <td style="vertical-align:middle;">
+                                            @*@Html.ActionLink("Delete", "DeleteCard", "ShopCart", new { id = el.Id }, new { onclick = "return confirm ('Вы уверены?');" })*@
+                                            @*<button class="btn btn-danger btn-sm btn-circle" title="Удалить выбранный товар" type="button" onclick="location.href='@Url.Action("DeleteCard", "ShopCart", new { @id = el.Id })'"><i class="fa fa-trash-o fa-lg"></i></button>*@
+                                            @*<a title="Удалить выбранный товар" href="@Url.Action("DeleteCard", "ShopCart", new { @id = el.Id })" onclick="return confirm('Вы действительно хотите удалить этот товар?');" class="btn btn-danger btn-sm btn-circle">
+            <i class="fa fa-trash-o fa-lg"></i>
+        </a>*@
+                                            <button type="button" class="btn btn-danger btn-sm btn-circle" data-toggle="modal" data-target="#deleteModal">
+                                                <i class="fa fa-trash-o fa-lg"></i>
+                                            </button>
+
+                                            <div id="deleteModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">                                                            
+                                                            <div class="form-horizontal">
+                                                                <p>Вы действительно хотите удалить этот товар?</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a class="btn btn-success" asp-controller="ShopCart" asp-action="DeleteCard" asp-route-id="@el.Id">Да</a>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Нет</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="alert alert-warning col-2" style="border-left: 1px black;">
+                    <p>Итого:</p>
+                    @{
+                        var total = String.Format("{0:N0}", Model.listShopItems.Sum(x => x.Quantity * x.Price));
+                    }
+                    <p style="font: 36px/40px 'Exo2 Medium',Arial,Tahoma,monospac;">@total.ToString() ₽</p>
+                </div>
+            </div>
+            @*</form>*@
+        }
+
+        <hr />
+        <div class="text-right">
+            <a class="btn btn-danger" asp-controller="Order" asp-action="Checkout">Оформить заказ</a>
+        </div>
+    }
+
+</div>
+
+
+<style>
+    .number-input input[type="number"] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        /*appearance: textfield;*/
+    }
+
+    .number-input input[type=number]::-webkit-inner-spin-button,
+    .number-input input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .number-input button {
+        -webkit-appearance: none;
+        background-color: transparent;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+    }
+
+        .number-input button:before,
+        .number-input button:after {
+            display: inline-block;
+            position: absolute;
+            content: '';
+            height: 2px;
+            transform: translate(-50%, -50%);
+        }
+
+        .number-input button.plus:after {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+    .number-input input[type=number] {
+        text-align: center;
+    }
+
+    .number-input.number-input {
+        border: 1px solid #ced4da;
+        width: 10rem;
+        border-radius: .25rem;
+    }
+
+        .number-input.number-input button {
+            width: 2.6rem;
+            height: .7rem;
+        }
+
+            .number-input.number-input button.minus {
+                padding-left: 10px;
+            }
+
+            .number-input.number-input button:before,
+            .number-input.number-input button:after {
+                width: .7rem;
+                background-color: #495057;
+            }
+
+        .number-input.number-input input[type=number] {
+            max-width: 4rem;
+            padding: .5rem;
+            border: 1px solid #ced4da;
+            border-width: 0 1px;
+            font-size: 1rem;
+            height: 2rem;
+            color: #495057;
+        }
+</style>
+
+<style>
+    /* CSS */
+    .btn-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 19px;
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
+        font-size: 16px;
+        white-space: normal;
+    }
+</style>
+
+<style>
+    .imgrow {
+        height: 100px;
+        width: 100px;
+    }
+
+        .imgrow img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+</style>
