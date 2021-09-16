@@ -28,14 +28,5 @@ namespace Ecommerce.Controllers
             };*/
             return View(items);
         }
-
-        
-        public IActionResult VerificationAddToCart(int id)
-        {
-            var item = db.Products.FirstOrDefault(i => i.Id == id);
-            if (item != null)
-                shopCart.AddToCart(item, 1);
-            return PartialView(item);
-        }
     }
 }

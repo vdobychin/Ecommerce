@@ -1,17 +1,35 @@
 ﻿@model Product
 
-<div class="card" style="width: 18rem;">
-    <img src="@Model.Img" class="card-img-top" alt="..." />
-    <div class="card-body">
-        <h5 class="card-title">@Model.Name</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        
-        <div>
-            <form method="post" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
-                <input type="submit" class="btn btn-primary" value="Добавить в корзину" />
-            </form>
+
+
+    <div class="card" style="width: 18rem;">
+        <img src="@Model.Img" class="card-img-top" alt="..." />
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+            <div>
+                <form method="post" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
+                    <input type="submit" class="btn btn-primary" value="Добавить в корзину" />
+                </form>
+            </div>
         </div>
-        
-        
     </div>
-</div>
+
+
+
+@*
+    <div class="col-md-4">
+        <div class="card-box text-center">
+            <div class="user-pic">
+                <img src="@Model.Img" class="img-fluid" alt="User Pic">
+            </div>
+            <h4>Salim Malik</h4>
+            <h6>Front End Developer</h6>
+            <hr>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <hr>
+            <input type="submit" class="btn btn-primary" value="Добавить в корзину" />
+        </div>
+    </div>
+*@
