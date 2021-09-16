@@ -11,10 +11,10 @@ namespace Ecommerce.Models
 {
     public class ShopCart
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly DatabaseContext db;
         public ShopCart(DatabaseContext _databaseContext)
         {
-            databaseContext = _databaseContext;
+            db = _databaseContext;
         }
 
         public string ShopCardId { get; set; }
@@ -33,11 +33,12 @@ namespace Ecommerce.Models
         
         public void AddToCart(Product product, int quantity)
         {
-            ShopCartItem shopCartItem = databaseContext.ShopCartItems.Where(g => g.Id == product.Id && g.ShopCartId == ShopCardId).FirstOrDefault();
+            ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.ProductId == product.Id && g.ShopCartId == ShopCardId).FirstOrDefault();
             if (shopCartItem == null)
             {
-                databaseContext.ShopCartItems.Add(new ShopCartItem
+                db.ShopCartItems.Add(new ShopCartItem
                 {
+                    Time = DateTime.Now,
                     ShopCartId = ShopCardId,
                     Product = product,
                     Price = product.Price,
@@ -48,13 +49,22 @@ namespace Ecommerce.Models
             {
                 shopCartItem.Quantity += quantity;
             }
-
-            databaseContext.SaveChanges();
+            db.SaveChanges();
         }
 
         public List<ShopCartItem> getShopItems()    //Список товаров в корзине
         {
-            return databaseContext.ShopCartItems.Where(c => c.ShopCartId == ShopCardId).Include(s => s.Product).ToList();
+            return db.ShopCartItems.Where(c => c.ShopCartId == ShopCardId).Include(s => s.Product).ToList();
+        }
+
+        public int getTotalQuantityProductCart()
+        {
+            return db.ShopCartItems.Where(a => a.ShopCartId == ShopCardId/*текущий Id сессии*/).Sum(a => a.Quantity);
+        }
+
+        public decimal getTotalSumProductCart()
+        {
+            return db.ShopCartItems.Where(a => a.ShopCartId == ShopCardId/*текущий Id сессии*/).ToList().Sum(a => a.Quantity * a.Price);
         }
     }
 }

@@ -23,10 +23,8 @@ namespace Ecommerce.Controllers
 
         public IActionResult Index()
         {
-            ShopCartItem shopCartItem = new ShopCartItem();
-            shopCartItem.Quantity = getCountShopCartItems();
-            ViewBag.products = db.Products.ToList(); //db.MonofilamentLines.ToList();
-            return View(shopCartItem);
+            ViewBag.products = db.Products.ToList();
+            return View(shopCart);
         }
 
         public IActionResult Privacy()
@@ -46,23 +44,7 @@ namespace Ecommerce.Controllers
             if (item != null)
                 shopCart.AddToCart(item, 1);
 
-            ShopCartItem shopCartItem = new ShopCartItem();
-            shopCartItem.Quantity = getCountShopCartItems();
-            return PartialView("_ShowCart", shopCartItem);
-        }
-
-        /*
-        public IActionResult VerificationAddToCart(int id)
-        {
-            var item = db.Products.FirstOrDefault(i => i.Id == id);
-            if (item != null)
-                shopCart.AddToCart(item, 1);
-            return PartialView(item);
-        }
-        */
-        private int getCountShopCartItems()
-        {
-            return db.ShopCartItems.Count(a => a.ShopCartId == shopCart.ShopCardId);
+            return PartialView("_ShowCart", shopCart);
         }
     }
 }
