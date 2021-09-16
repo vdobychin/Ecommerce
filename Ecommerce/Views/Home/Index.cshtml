@@ -19,8 +19,18 @@
     <partial name="CartAmmount" model="Model" />
 *@
 
+@*
+    <div class="row mt-5 mb-2">
+        @{
+            foreach (var product in ViewBag.products)
+            {
+                <partial name="_ProductCard.cshtml" model="product" />
+            }
+        }
+    </div>
+ *@
 
-<div class="row mt-5 mb-2">
+<div class="row">
     @{
         foreach (var product in ViewBag.products)
         {

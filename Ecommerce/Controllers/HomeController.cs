@@ -23,18 +23,15 @@ namespace Ecommerce.Controllers
 
         public IActionResult Index()
         {
-            ShopCartItem cart = new ShopCartItem();
-            cart.Quantity = 4;
+            ShopCartItem shopCartItem = new ShopCartItem();
+            shopCartItem.Quantity = getCountShopCartItems();
             ViewBag.products = db.Products.ToList(); //db.MonofilamentLines.ToList();
-            return View(cart);
+            return View(shopCartItem);
         }
 
         public IActionResult Privacy()
         {
-            ShopCartItem shopCartItem = new ShopCartItem();
-            shopCartItem.Quantity = 5;
-            return View(shopCartItem);
-            //return View();
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -43,9 +40,14 @@ namespace Ecommerce.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public ActionResult UpdateShopingCart(ShopCartItem shopCartItem)
+        public ActionResult UpdateShopingCart(int id)
         {
-            shopCartItem.Quantity = 6;
+            var item = db.Products.FirstOrDefault(i => i.Id == id);
+            if (item != null)
+                shopCart.AddToCart(item, 1);
+
+            ShopCartItem shopCartItem = new ShopCartItem();
+            shopCartItem.Quantity = getCountShopCartItems();
             return PartialView("_ShowCart", shopCartItem);
         }
 
@@ -58,5 +60,9 @@ namespace Ecommerce.Controllers
             return PartialView(item);
         }
         */
+        private int getCountShopCartItems()
+        {
+            return db.ShopCartItems.Count(a => a.ShopCartId == shopCart.ShopCardId);
+        }
     }
 }
