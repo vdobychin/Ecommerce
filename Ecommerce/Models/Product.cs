@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ecommerce.Models.Line;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce.Models
@@ -14,12 +16,9 @@ namespace Ecommerce.Models
         public decimal Price { get; set; }              // Цена
         public bool isFavourite { get; set; }       // Для отображения при старте
 
-        //[ForeignKey("CatalogId")]
-        public int CatalogId { get; set; }
-        public Catalog Catalog { get; set; }
-
-        //[ForeignKey("SubCatalogId")]
-        public int SubCatalogId { get; set; }
-        public SubCatalog SubCatalog { get; set; }
+        public virtual Catalog Catalog { get; set; }
+        public virtual SubCatalog SubCatalog { get; set; }
+        public virtual ICollection <ShopCartItem> ShopCartItems { get; set; }
+        public virtual ICollection<MonofilamentLine> MonofilamentLines { get; set; }
     }
 }

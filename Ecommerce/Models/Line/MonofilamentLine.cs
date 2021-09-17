@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce.Models.Line
@@ -17,10 +18,8 @@ namespace Ecommerce.Models.Line
         public string CountryManufacturing { get; set; }
         public string Color { get; set; }
 
-        public int CatalogId { get; set; }
-        public Catalog Catalog { get; set; }
-
-        public int SubCatalogId { get; set; }
-        public SubCatalog SubCatalog { get; set; }
+        public virtual Catalog Catalog { get; set; }
+        public virtual SubCatalog SubCatalog { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

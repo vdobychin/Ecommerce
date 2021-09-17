@@ -33,7 +33,7 @@ namespace Ecommerce.Models
         
         public void AddToCart(Product product, int quantity)
         {
-            ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.ProductId == product.Id && g.ShopCartId == ShopCardId).FirstOrDefault();
+            ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.Product.Id == product.Id && g.ShopCartId == ShopCardId && g.Time.Date == DateTime.Today).FirstOrDefault();
             if (shopCartItem == null)
             {
                 db.ShopCartItems.Add(new ShopCartItem
@@ -54,7 +54,7 @@ namespace Ecommerce.Models
 
         public List<ShopCartItem> getShopItems()    //Список товаров в корзине
         {
-            return db.ShopCartItems.Where(c => c.ShopCartId == ShopCardId).Include(s => s.Product).ToList();
+            return db.ShopCartItems.Where(a => a.ShopCartId == ShopCardId).Include(a => a.Product).ToList();
         }
 
         public int getTotalQuantityProductCart()
