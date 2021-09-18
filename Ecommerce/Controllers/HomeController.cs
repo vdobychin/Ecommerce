@@ -46,5 +46,11 @@ namespace Ecommerce.Controllers
 
             return PartialView("_ShowCart", shopCart);
         }
+
+        public IActionResult GetMonofilamentLines()
+        {
+            ViewBag.products = db.Products.ToList();
+            return View(shopCart);
+        }
     }
 }
