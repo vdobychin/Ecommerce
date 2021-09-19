@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
 using Ecommerce.Models.Line;
+using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -49,6 +50,12 @@ namespace Ecommerce.Controllers
 
         public IActionResult GetMonofilamentLines()
         {
+            //ViewBag.Title = "Страница с жесткими дисками SSD";
+            MonofilamentLineViewModel obj = new MonofilamentLineViewModel();
+            //obj.Unwinding = 50000;
+            obj.monofilamentLines = db.MonofilamentLines.ToList();
+            ViewBag.monofilamentLines = obj;
+
             ViewBag.products = db.Products.ToList();
             return View(shopCart);
         }
