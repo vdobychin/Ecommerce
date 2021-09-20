@@ -1,4 +1,6 @@
-﻿<form method="post">
+﻿@model Ecommerce.ViewModels.ProductShopCartViewModel
+
+<form method="post">
     <!--action="~/Home/GetMonofilamentLines"-->
     <aside>
         <div class="row">
@@ -7,18 +9,37 @@
         <div>
             <p>Размотка</p>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
-                <label class="form-check-label" for="Unwinding_30">
-                    30 м
-                </label>
+                <span class="filter_item">
+                    @Html.EditorFor(x => x.Unwinding_30, new { @Value = "false" })
+                    <a> 30 м </a>
+                </span>
+                @*
+        <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
+        <label class="form-check-label" for="Unwinding_30">
+            30 м
+        </label>
+                *@
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="100" name="Unwinding_100">   <!--checked-->
-                <label class="form-check-label" for="Unwinding_100">
-                    100 м
-                </label>
+                <span class="filter_item">
+                    @Html.EditorFor(x => x.Unwinding_100, new { @Value = "false" })
+                    <a> 100 м </a>
+                </span>
+                @*
+        <input class="form-check-input" type="checkbox" value="100" name="Unwinding_100">   <!--checked-->
+        <label class="form-check-label" for="Unwinding_100">
+            100 м
+        </label>
+                *@
             </div>
         </div>
         <input type="submit" value="Применить" />
     </aside>
 </form>
+
+<style>
+    .filter_item {
+        display: inline-block;
+        margin-right: 15px;
+    }
+</style>

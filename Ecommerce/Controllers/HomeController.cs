@@ -1,8 +1,10 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
 using Ecommerce.Models.Line;
+using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -24,7 +26,8 @@ namespace Ecommerce.Controllers
         public IActionResult Index()
         {
             //ViewBag.products = db.Products.ToList();
-            return View(shopCart);
+            ProductShopCartViewModel productShopCartViewModel = new ProductShopCartViewModel(shopCart);
+            return View(productShopCartViewModel);
         }
 
         public IActionResult Privacy()
@@ -44,26 +47,27 @@ namespace Ecommerce.Controllers
             if (item != null)
                 shopCart.AddToCart(item, 1);
 
-            return PartialView("_ShowCart", shopCart);
+
+            return PartialView("_ShowCart", new ProductShopCartViewModel(shopCart));
         }
 
         [HttpGet]
         public ActionResult GetMonofilamentLines()
         {
             ViewBag.products = db.Products.ToList();
-            return View(shopCart);
+            
+            return View(new ProductShopCartViewModel(shopCart));
         }
 
         [HttpPost]
-        public ActionResult GetMonofilamentLines(int Unwinding_30, int Unwinding_100)
+        public ActionResult GetMonofilamentLines(bool Unwinding_30, bool Unwinding_100)
         {
-            //ViewBag.products = db.Products.ToList();
-            if (Unwinding_30 != 0)
-            {
-                ViewBag.products = db.Products.Where(x => x.MonofilamentLine.Unwinding == Unwinding_30).ToList();
-            }
+            List<int> UnwindingFilter = new List<int>();
+            if (Unwinding_30) UnwindingFilter.Add(30);
+            if (Unwinding_100) UnwindingFilter.Add(100);
+            ViewBag.products = UnwindingFilter.Any() ? db.Products.Where(i => UnwindingFilter.Contains(i.MonofilamentLine.Unwinding)) : db.Products;
 
-            return View(shopCart);
+            return View(new ProductShopCartViewModel(shopCart));
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿@model ShopCart
+﻿@model Ecommerce.ViewModels.ProductShopCartViewModel
 
 <div>
     <form asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
         <div>
             <img src="~/images/shopping-cart.png" width="30" />
             <p>
-                Товаров: &nbsp;&nbsp;@Model.getTotalQuantityProductCart() шт.<br />
-                На сумму: @Model.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
+                Товаров: &nbsp;&nbsp;@Model.shopCart.getTotalQuantityProductCart() шт.<br />
+                На сумму: @Model.shopCart.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
             </p>
         </div>
     </form>
