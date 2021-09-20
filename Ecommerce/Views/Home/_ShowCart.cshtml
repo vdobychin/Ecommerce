@@ -6,7 +6,7 @@
             <img src="~/images/shopping-cart.png" width="30" />
             <p>
                 Товаров: &nbsp;&nbsp;@Model.getTotalQuantityProductCart() шт.<br />
-                На сумму: @Model.getTotalSumProductCart().ToString("C")
+                На сумму: @Model.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
             </p>
         </div>
     </form>

@@ -1,23 +1,24 @@
-﻿@model ViewBag.monofilamentLines
-
-<aside>
-    <div class="row">
-        <p>Фильтр</p>
-    </div>
-    <div>
-        <p>Размотка</p>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                @Html.EditorFor(x => x.)
-                30 м
-            </label>
+﻿<form method="post">
+    <!--action="~/Home/GetMonofilamentLines"-->
+    <aside>
+        <div class="row">
+            <p>Фильтр</p>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">   <!--checked-->
-            <label class="form-check-label" for="flexCheckChecked">
-                100 м
-            </label>
+        <div>
+            <p>Размотка</p>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
+                <label class="form-check-label" for="Unwinding_30">
+                    30 м
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="100" name="Unwinding_100">   <!--checked-->
+                <label class="form-check-label" for="Unwinding_100">
+                    100 м
+                </label>
+            </div>
         </div>
-    </div>
-</aside>
+        <input type="submit" value="Применить" />
+    </aside>
+</form>

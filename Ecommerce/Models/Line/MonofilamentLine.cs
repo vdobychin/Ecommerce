@@ -8,8 +8,8 @@ namespace Ecommerce.Models.Line
     public class MonofilamentLine
     {
         [Key]
-        [ForeignKey("Id")]
-        public int Id { get; set; }
+        //[ForeignKey(Product.Id)]
+        public int ProductId { get; set; }
         public string Name { get; set; }
         public string Company { get; set; }
         public double Diameter { get; set; }
@@ -20,6 +20,9 @@ namespace Ecommerce.Models.Line
 
         public virtual Catalog Catalog { get; set; }
         public virtual SubCatalog SubCatalog { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
+        
+        public int Id { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

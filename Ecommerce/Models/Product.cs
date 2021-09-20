@@ -19,6 +19,7 @@ namespace Ecommerce.Models
         public virtual Catalog Catalog { get; set; }
         public virtual SubCatalog SubCatalog { get; set; }
         public virtual ICollection <ShopCartItem> ShopCartItems { get; set; }
-        public virtual ICollection<MonofilamentLine> MonofilamentLines { get; set; }
+        //public virtual ICollection<MonofilamentLine> MonofilamentLines { get; set; }
+        public virtual MonofilamentLine MonofilamentLine { get; set; }
     }
 }

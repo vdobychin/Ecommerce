@@ -1,7 +1,6 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
 using Ecommerce.Models.Line;
-using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -24,7 +23,7 @@ namespace Ecommerce.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.products = db.Products.ToList();
+            //ViewBag.products = db.Products.ToList();
             return View(shopCart);
         }
 
@@ -48,15 +47,22 @@ namespace Ecommerce.Controllers
             return PartialView("_ShowCart", shopCart);
         }
 
-        public IActionResult GetMonofilamentLines()
+        [HttpGet]
+        public ActionResult GetMonofilamentLines()
         {
-            //ViewBag.Title = "Страница с жесткими дисками SSD";
-            MonofilamentLineViewModel obj = new MonofilamentLineViewModel();
-            //obj.Unwinding = 50000;
-            obj.monofilamentLines = db.MonofilamentLines.ToList();
-            ViewBag.monofilamentLines = obj;
-
             ViewBag.products = db.Products.ToList();
+            return View(shopCart);
+        }
+
+        [HttpPost]
+        public ActionResult GetMonofilamentLines(int Unwinding_30, int Unwinding_100)
+        {
+            //ViewBag.products = db.Products.ToList();
+            if (Unwinding_30 != 0)
+            {
+                ViewBag.products = db.Products.Where(x => x.MonofilamentLine.Unwinding == Unwinding_30).ToList();
+            }
+
             return View(shopCart);
         }
     }
