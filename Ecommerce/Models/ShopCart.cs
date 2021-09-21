@@ -33,7 +33,7 @@ namespace Ecommerce.Models
         
         public void AddToCart(Product product, int quantity)
         {
-            ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.Product.Id == product.Id && g.ShopCartId == ShopCardId && g.Time.Date == DateTime.Today).FirstOrDefault();
+            ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.Product.ProductId == product.ProductId && g.ShopCartId == ShopCardId && g.Time.Date == DateTime.Today).FirstOrDefault();
             if (shopCartItem == null)
             {
                 db.ShopCartItems.Add(new ShopCartItem

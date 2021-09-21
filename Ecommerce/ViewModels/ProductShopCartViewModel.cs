@@ -19,6 +19,8 @@ namespace Ecommerce.ViewModels
         public bool Unwinding_130 { get; set; }
         public bool Unwinding_150 { get; set; }
 
+        public Line Line { get; set; }
+
         public Product Product { get; set; }
     }
 }

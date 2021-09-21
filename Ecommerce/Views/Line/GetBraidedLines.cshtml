@@ -14,9 +14,9 @@
 <div class="row">
     <div class="col-9">
         @{
-            foreach (var product in ViewBag.products)
+            foreach (Line line in ViewBag.products)
             {
-                <partial name="~/Views/Shared/_ProductCard.cshtml" model="product" />
+                <partial name="~/Views/Shared/_ProductCard.cshtml" model="line" />
             }
         }
     </div>

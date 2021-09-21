@@ -1,6 +1,5 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
-using Ecommerce.Models.Line;
 using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -43,7 +42,7 @@ namespace Ecommerce.Controllers
 
         public ActionResult UpdateShopingCart(int id)
         {
-            var item = db.Products.FirstOrDefault(i => i.Id == id);
+            var item = db.Products.FirstOrDefault(i => i.ProductId == id);
             if (item != null)
                 shopCart.AddToCart(item, 1);
 

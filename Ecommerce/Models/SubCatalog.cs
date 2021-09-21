@@ -1,5 +1,4 @@
-﻿using Ecommerce.Models.Line;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,6 +15,5 @@ namespace Ecommerce.Models
 
         //public List<MonofilamentLine> MonofilamentLines { get; set; }
         public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<MonofilamentLine> MonofilamentLines { get; set; }
     }
 }
