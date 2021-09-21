@@ -4,12 +4,15 @@
     <h6 style="display:inline">
         <a asp-controller="Home" asp-action="Index">Каталог</a>
         <span> - </span>
-        <span> Леска </span>
-        <span> - </span>
-        <a asp-controller="Line" asp-action="GetBraidedLines">Плетеный шнур</a>
+        <a asp-controller="Line" asp-action="GetLines">Леска</a>
+        @if (!String.IsNullOrEmpty(Model.subCatalogName))
+        {
+            <span> - </span>
+            <a asp-controller="Line" asp-action=@Model.actionName>@Model.subCatalogName</a>
+        }
+
     </h6>
 </div>
-
 
 <div class="row">
     <div class="col-9">
@@ -22,6 +25,6 @@
     </div>
 
     <div class="col-3">
-        @await Html.PartialAsync("_MonofilamentLinesFilters")
+        @await Html.PartialAsync("_LinesFilters")
     </div>
 </div>

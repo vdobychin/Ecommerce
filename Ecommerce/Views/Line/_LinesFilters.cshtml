@@ -1,0 +1,132 @@
+﻿@model Ecommerce.ViewModels.ProductShopCartViewModel
+
+<form method="post">
+    <!--action="~/Home/GetMonofilamentLines"-->
+    <aside>
+        <div class="row">
+            <p>Фильтр</p>
+        </div>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Размотка
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.Unwinding_30, new { @Value = "false" })
+                                <a> 30 м </a>
+                            </span>
+                            @*
+                            <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
+                            <label class="form-check-label" for="Unwinding_30">
+                                30 м
+                            </label>
+                            *@
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.Unwinding_100, new { @Value = "false" })
+                                <a> 100 м </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.Unwinding_130, new { @Value = "false" })
+                                <a> 130 м </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.Unwinding_150, new { @Value = "false" })
+                                <a> 150 м </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                        Страна
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.china, new { @Value = "false" })
+                                <a> Китай </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.japan, new { @Value = "false" })
+                                <a> Япония </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                        Цвет
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.green, new { @Value = "false" })
+                                <a> зеленый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.transparent, new { @Value = "false" })
+                                <a> прозрачный </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.orange, new { @Value = "false" })
+                                <a> оранжевый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.darkGreen, new { @Value = "false" })
+                                <a> темно-зеленый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lightGreen, new { @Value = "false" })
+                                <a> светло-зеленый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.pink, new { @Value = "false" })
+                                <a> розовый </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Применить фильтр" />
+       
+</aside>
+</form>
+
+<style>
+    .filter_item {
+        display: inline-block;
+        margin-right: 15px;
+    }
+</style>

@@ -24,62 +24,60 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetBraidedLines()
+        public ActionResult GetLines()
         {
-            /*
-            var t = from a in db.Lines
-                    join e in db.Products
-                    on a.ProductId equals e.ProductId
-                    where a.Product.SubCatalog.Id == cBraidedLine
-                    select a;
-            */
-
-            var blogs = db.Lines
-    .Where(p => p.Product.SubCatalog.Id == cBraidedLine)
-    .Include(x => x.Product)
-    .ToList();
-
-            //Line d = db.Lines.Join(db.Products, l => l.ProductId, p => p.ProductId, (l, p) => new {l.ProductId, l.Diameter, l.Unwinding, l.BreakingLoad_kg, l.BreakingLoad_lb, l.Color, l.Company, l.Product, l.Country }).Where(x => x.Product.SubCatalog.Id == cBraidedLine).ToList();
-            //ViewBag.products = db.Lines.Where(x => x.Product.SubCatalog.Id == cBraidedLine);
-            ViewBag.products = blogs;
-
+            Filter();
             return View(new ProductShopCartViewModel(shopCart));
         }
 
         [HttpPost]
-        public ActionResult GetBraidedLines(bool Unwinding_30, bool Unwinding_100)
+        public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150)
         {
-            List<int> UnwindingFilter = new List<int>();
-            if (Unwinding_30) UnwindingFilter.Add(30);
-            if (Unwinding_100) UnwindingFilter.Add(100);
-            //ViewBag.products = UnwindingFilter.Any() ? db.Products.Where(i => UnwindingFilter.Contains(i.Line.Unwinding) && i.SubCatalog.Id == cBraidedLine) : db.Products.Where(x => x.SubCatalog.Id == cBraidedLine);
-            ViewBag.products = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding) && i.Product.SubCatalog.Id == cBraidedLine) : db.Lines.Where(x => x.Product.SubCatalog.Id == cBraidedLine);
-
+            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150);
             return View(new ProductShopCartViewModel(shopCart));
+        }
+
+
+        [HttpGet]
+        public ActionResult GetBraidedLines()
+        {
+            Filter(cLine: cBraidedLine); //явный параметр
+            return View("GetLines", new ProductShopCartViewModel(shopCart, "Плетеный шнур", "GetBraidedLines"));
+        }
+
+        [HttpPost]
+        public ActionResult GetBraidedLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150)
+        {
+            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, cBraidedLine);
+            return View("GetLines", new ProductShopCartViewModel(shopCart, "Плетеный шнур", "GetBraidedLines"));
         }
 
         [HttpGet]
         public ActionResult GetMonofilamentLines()
         {
-            //ViewBag.products = db.Products.Where(x => x.SubCatalog.Id == cMonofilamentLine);
-            ViewBag.products = db.Lines.Where(x => x.Product.SubCatalog.Id == cMonofilamentLine);
-
-            return View(new ProductShopCartViewModel(shopCart));
+            Filter(cLine: cMonofilamentLine); //явный параметр
+            return View("GetLines", new ProductShopCartViewModel(shopCart, "Монофильная леска", "GetMonofilamentLines"));
         }
 
         [HttpPost]
         public ActionResult GetMonofilamentLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150)
         {
-            List<int> UnwindingFilter = new List<int>();
-            if (Unwinding_30) UnwindingFilter.Add(30);
-            if (Unwinding_100) UnwindingFilter.Add(100);
-            if (Unwinding_130) UnwindingFilter.Add(130);
-            if (Unwinding_150) UnwindingFilter.Add(150);
+            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, cMonofilamentLine);
+            return View("GetLines", new ProductShopCartViewModel(shopCart, "Монофильная леска", "GetMonofilamentLines"));
+        }
 
-            //ViewBag.products = UnwindingFilter.Any() ? db.Products.Where(i => UnwindingFilter.Contains(i.Line.Unwinding) && i.SubCatalog.Id == cMonofilamentLine) : db.Products.Where(x => x.SubCatalog.Id == cMonofilamentLine);
-            ViewBag.products = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding) && i.Product.SubCatalog.Id == cMonofilamentLine) : db.Lines.Where(x => x.Product.SubCatalog.Id == cMonofilamentLine);
+        private void Filter(bool Unwinding_30 = false, bool Unwinding_100 = false, bool Unwinding_130 = false, bool Unwinding_150 = false, int cLine = 0)
+        {
+            List<int> FilterResult = new List<int>();
+            if (Unwinding_30) FilterResult.Add(30);
+            if (Unwinding_100) FilterResult.Add(100);
+            if (Unwinding_130) FilterResult.Add(130);
+            if (Unwinding_150) FilterResult.Add(150);
 
-            return View(new ProductShopCartViewModel(shopCart));
+            if(cLine != 0)
+                ViewBag.products = FilterResult.Any() ? db.Lines.Where(i => FilterResult.Contains(i.Unwinding) && i.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList() : db.Lines.Where(x => x.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList();
+            else
+                ViewBag.products = FilterResult.Any() ? db.Lines.Where(i => FilterResult.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
         }
     }
 }

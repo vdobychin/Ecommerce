@@ -6,24 +6,29 @@
             <div class="col-md-4">
                 <img src="@Model.Product.Img" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="card-body">
                     <h5 class="card-title">@Model.Product.Name</h5>
-                    <p class="card-text">Артикул: @Model.ProductId.ToString()</p>
-                    <p class="card-text">Диаметр: @Model.Diameter.ToString()</p>
+                    <p class="card-text">Артикул: @Model.ProductId</p>
+                    <p class="card-text">Диаметр: @Model.Diameter</p>
                     <p class="card-text">Размотка: @Model.Unwinding</p>
-                    <p class="card-text">Разрывная нагрузка, кг: @Model.BreakingLoad_kg.ToString()</p>
+                    <p class="card-text">Разрывная нагрузка, кг: @Model.BreakingLoad_kg</p>
 
                     @if (Model.BreakingLoad_lb > 0)
                     {
-                        <p class="card-text">Разрывная нагрузка, lb: @Model.BreakingLoad_lb.ToString()</p>
-                    }                        
+                        <p class="card-text">Разрывная нагрузка, lb: @Model.BreakingLoad_lb</p>
+                    }
 
                     <p class="card-text">Страна производитель: @Model.Country</p>
                     <p class="card-text">Цвет: @Model.Color</p>
-                    @*<p class="card-text"><small class="text-muted">Последнее обновление 3 мин. назад</small></p>*@
-                    <input type="submit" class="btn btn-primary" value="В корзину" />
                 </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-body">
+                    <h3 class="text-primary font-weight-bold">@Model.Product.Price.ToString("C")</h3>
+                    <p class="card-text">В наличии: @Model.Product.Quantity шт.</p>
+                    <input type="submit" class="btn btn-primary" value="В корзину" />
+                </div>                
             </div>
         </div>
     </div>
