@@ -47,7 +47,7 @@
                                             <input type="hidden" id="id" name="id" value=@el.Id />
                                         </td>
 
-                                        <td style="vertical-align:middle;"><b>@el.Product.Name (@el.Product.Mark)</b></td>
+                                        <td style="vertical-align:middle;"><b>@el.Product.Name (@el.Product.Name)</b></td>
                                         <td style="vertical-align:middle;"><b>@el.Price.ToString("c")</b></td>
                                         <td style="vertical-align:middle;">
                                             @*<input id="quantity" name="quantity" type="number" maxlength="2" min="1" value=@el.quantity.ToString() class="product_amount_control" onclick="location.href='@Url.Action("UpdateCard", "ShopCart", new { @id = el.Id, @quantity =  })'" />*@

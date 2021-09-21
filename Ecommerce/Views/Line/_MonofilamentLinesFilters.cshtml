@@ -14,10 +14,10 @@
                     <a> 30 м </a>
                 </span>
                 @*
-        <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
-        <label class="form-check-label" for="Unwinding_30">
-            30 м
-        </label>
+            <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
+            <label class="form-check-label" for="Unwinding_30">
+                30 м
+            </label>
                 *@
             </div>
             <div class="form-check">
@@ -25,12 +25,18 @@
                     @Html.EditorFor(x => x.Unwinding_100, new { @Value = "false" })
                     <a> 100 м </a>
                 </span>
-                @*
-        <input class="form-check-input" type="checkbox" value="100" name="Unwinding_100">   <!--checked-->
-        <label class="form-check-label" for="Unwinding_100">
-            100 м
-        </label>
-                *@
+            </div>
+            <div class="form-check">
+                <span class="filter_item">
+                    @Html.EditorFor(x => x.Unwinding_130, new { @Value = "false" })
+                    <a> 130 м </a>
+                </span>
+            </div>
+            <div class="form-check">
+                <span class="filter_item">
+                    @Html.EditorFor(x => x.Unwinding_150, new { @Value = "false" })
+                    <a> 150 м </a>
+                </span>
             </div>
         </div>
         <input type="submit" value="Применить" />

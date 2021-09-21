@@ -1,0 +1,27 @@
+﻿@model Ecommerce.ViewModels.ProductShopCartViewModel
+
+<div class="row">
+    <h6 style="display:inline">
+        <a asp-controller="Home" asp-action="Index">Каталог</a>
+        <span> - </span>
+        <span> Леска </span>
+        <span> - </span>
+        <a asp-controller="Line" asp-action="GetBraidedLines">Плетеный шнур</a>
+    </h6>
+</div>
+
+
+<div class="row">
+    <div class="col-9">
+        @{
+            foreach (var product in ViewBag.products)
+            {
+                <partial name="~/Views/Shared/_ProductCard.cshtml" model="product" />
+            }
+        }
+    </div>
+
+    <div class="col-3">
+        @await Html.PartialAsync("_MonofilamentLinesFilters")
+    </div>
+</div>

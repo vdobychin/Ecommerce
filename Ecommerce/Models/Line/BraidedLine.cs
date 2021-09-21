@@ -10,7 +10,6 @@ namespace Ecommerce.Models.Line
         [Key]
         //[ForeignKey(Product.Id)]
         public int ProductId { get; set; }
-        public string Name { get; set; }
         public string Company { get; set; }
         public double Diameter { get; set; }
         public int Unwinding { get; set; }
@@ -18,8 +17,8 @@ namespace Ecommerce.Models.Line
         public string CountryManufacturing { get; set; }
         public string Color { get; set; }
 
-        public virtual Catalog Catalog { get; set; }
-        public virtual SubCatalog SubCatalog { get; set; }
+        //public virtual Catalog Catalog { get; set; }
+        //public virtual SubCatalog SubCatalog { get; set; }
         //public virtual ICollection<Product> Products { get; set; }
         
         public int Id { get; set; }

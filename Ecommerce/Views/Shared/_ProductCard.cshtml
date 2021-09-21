@@ -1,6 +1,6 @@
 ﻿@model Product
 
-<form method="post" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.Id">
+<form method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.Id">
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
@@ -9,7 +9,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">@Model.Name</h5>
-                    <p class="card-text">Это более широкая карта с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+                    <p class="card-text">Артикул: @Model.Id</p>
                     @*<p class="card-text"><small class="text-muted">Последнее обновление 3 мин. назад</small></p>*@
                     <input type="submit" class="btn btn-primary" value="В корзину" />
                 </div>
