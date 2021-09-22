@@ -7,20 +7,20 @@
                 <img src="@Model.Product.Img" class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-5">
-                <div class="card-body">
-                    <h5 class="card-title">@Model.Product.Name</h5>
-                    <p class="card-text">Артикул: @Model.ProductId</p>
-                    <p class="card-text">Диаметр: @Model.Diameter</p>
-                    <p class="card-text">Размотка: @Model.Unwinding</p>
-                    <p class="card-text">Разрывная нагрузка, кг: @Model.BreakingLoad_kg</p>
+                <div class="card-body" style="display:inline-grid">
+                    <h3 class="card-title">@Model.Product.Name</h3>
+                    <span class="card-text">Артикул: @Model.ProductId</span>
+                    <span class="card-text">Диаметр: @Model.Diameter</span>
+                    <span class="card-text">Размотка: @Model.Unwinding</span>
+                    <span class="card-text">Разрывная нагрузка, кг: @Model.BreakingLoad_kg</span>
 
                     @if (Model.BreakingLoad_lb > 0)
                     {
-                        <p class="card-text">Разрывная нагрузка, lb: @Model.BreakingLoad_lb</p>
+                        <span class="card-text">Разрывная нагрузка, lb: @Model.BreakingLoad_lb</span>
                     }
 
-                    <p class="card-text">Страна производитель: @Model.Country</p>
-                    <p class="card-text">Цвет: @Model.Color</p>
+                    <span class="card-text">Страна производитель: @Model.Country</span>
+                    <span class="card-text">Цвет: @Model.Color</span>
                 </div>
             </div>
             <div class="col-md-3">

@@ -31,9 +31,10 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150, int subCatalogId = 0)
+        public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150, bool china, bool japan,
+            bool green, bool transparent, bool orange, bool darkGreen, bool lightGreen, bool pink, int subCatalogId = 0)
         {
-            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, cLine: subCatalogId);
+            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, china, japan, green, transparent, orange, darkGreen, lightGreen, pink, cLine: subCatalogId);
             return View(new ProductShopCartViewModel(shopCart, subCatalogId));
         }
 
@@ -82,18 +83,39 @@ namespace Ecommerce.Controllers
         }
         */
 
-        private void Filter(bool Unwinding_30 = false, bool Unwinding_100 = false, bool Unwinding_130 = false, bool Unwinding_150 = false, int cLine = 0)
+        private void Filter(bool Unwinding_30 = false, bool Unwinding_100 = false, bool Unwinding_130 = false, bool Unwinding_150 = false, bool china = false, bool japan = false,
+            bool green = false, bool transparent = false, bool orange = false, bool darkGreen = false, bool lightGreen = false, bool pink = false, int cLine = 0)
         {
-            List<int> FilterResult = new List<int>();
-            if (Unwinding_30) FilterResult.Add(30);
-            if (Unwinding_100) FilterResult.Add(100);
-            if (Unwinding_130) FilterResult.Add(130);
-            if (Unwinding_150) FilterResult.Add(150);
+            IEnumerable<Line> lines;
 
-            if(cLine != 0)
-                ViewBag.products = FilterResult.Any() ? db.Lines.Where(i => FilterResult.Contains(i.Unwinding) && i.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList() : db.Lines.Where(x => x.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList();
+            List<int> UnwindingFilter = new List<int>();
+            if (Unwinding_30) UnwindingFilter.Add(30);
+            if (Unwinding_100) UnwindingFilter.Add(100);
+            if (Unwinding_130) UnwindingFilter.Add(130);
+            if (Unwinding_150) UnwindingFilter.Add(150);
+
+            List<string> CountryFilter = new List<string>();
+            if (china) CountryFilter.Add("Китай");
+            if (japan) CountryFilter.Add("Япония");
+
+            List<string> ColorFilter = new List<string>();
+            if (green) CountryFilter.Add("зеленый");
+            if (transparent) CountryFilter.Add("прозрачный");
+            if (orange) CountryFilter.Add("оранжевый");
+            if (darkGreen) CountryFilter.Add("темно-зеленый");
+            if (lightGreen) CountryFilter.Add("светло-зеленый");
+            if (pink) CountryFilter.Add("розовый");
+
+            //lines = FilterString.Any() ? db.Lines.Where(i => FilterString.Contains(i.Country)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
+
+            if (cLine != 0)
+                lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding) && i.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList() : db.Lines.Where(x => x.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList();
             else
-                ViewBag.products = FilterResult.Any() ? db.Lines.Where(i => FilterResult.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
+                lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
+
+            lines = CountryFilter.Any() ? lines.Where(i => CountryFilter.Contains(i.Country) || ColorFilter.Contains(i.Color)).ToList() : lines.ToList();
+
+            ViewBag.products = lines;
         }
     }
 }
