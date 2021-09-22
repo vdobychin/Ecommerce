@@ -1,17 +1,28 @@
 ﻿@model Ecommerce.ViewModels.ProductShopCartViewModel
 
-<div class="row">
-    <h6 style="display:inline">
-        <a asp-controller="Home" asp-action="Index">Каталог</a>
-        <span> - </span>
-        <a asp-controller="Line" asp-action="GetLines">Леска</a>
-        @if (!String.IsNullOrEmpty(Model.subCatalogName))
+<div class="col-9 mb-3 p-2" style="border-radius: 5px; border: 2px solid #000;">
+    <div style="display: inline">
+        @if (Model.subCatalogId != 0)
         {
+            <a asp-controller="Home" asp-action="Index">Каталог</a>
             <span> - </span>
-            <a asp-controller="Line" asp-action=@Model.actionName>@Model.subCatalogName</a>
+            <a asp-controller="Line" asp-action="GetLines">Леска</a>
+            <span> - </span>
+            @if (Model.subCatalogId == 1)
+            {
+                <a asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="1">Плетеные шнуры</a>
+            }
+            else if (Model.subCatalogId == 2)
+            {
+                <a asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="2">Монофильная леска</a>
+            }
         }
-
-    </h6>
+        else
+        {
+            <a class="btn btn-secondary btn-sm" asp-action="GetLines" asp-route-subCatalogId="1" role="button">Плетеные шнуры</a>
+            <a class="btn btn-secondary btn-sm" asp-action="GetLines" asp-route-subCatalogId="2" role="button">Монофильная леска</a>
+        }
+    </div>    
 </div>
 
 <div class="row">

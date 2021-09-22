@@ -9,20 +9,19 @@ namespace Ecommerce.ViewModels
     public class ProductShopCartViewModel
     {
         public ShopCart shopCart { get; set; }
-        public string subCatalogName { get; set; }
+        public int subCatalogId { get; set; }
         public string actionName { get; set; }
-        public ProductShopCartViewModel(ShopCart _shopCart, string _subCatalogName = "", string _actionName = "")
+        public ProductShopCartViewModel(ShopCart _shopCart, int _subCatalogId = 0)
         {
             shopCart = _shopCart;
-            subCatalogName = _subCatalogName;
-            actionName = _actionName;
+            subCatalogId = _subCatalogId;
         }
 
+        //Unwinding
         public bool Unwinding_30 { get; set; }
         public bool Unwinding_100 { get; set; }
         public bool Unwinding_130 { get; set; }
         public bool Unwinding_150 { get; set; }
-
 
         //Country
         public bool china { get; set; }
@@ -35,6 +34,7 @@ namespace Ecommerce.ViewModels
         public bool darkGreen { get; set; }
         public bool lightGreen { get; set; }
         public bool pink { get; set; }
+
 
 
         public Line Line { get; set; }

@@ -1,27 +1,27 @@
 ﻿<div class="row">
     <div class="col-sm-3 my-2">
         <div class="card">
-            <a asp-controller="Line" asp-action="GetBraidedLines">
+            <a asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="1">
                 <img src="~/images/SubCatalog/BraidedLine2.jpg" class="card-img-top" alt="Плетеные шнуры для рыбалки">
             </a>
             <div class="card-body">
                 <h5 class="card-title">Плетеные шнуры</h5>
                 @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
-                <a class="btn btn-primary" asp-controller="Line" asp-action="GetBraidedLines" role="button">Подробнее</a>
+                <a class="btn btn-primary" asp-controller="Line" asp-action="GetLines" role="button">Подробнее</a>
             </div>
         </div>
     </div>
 
     <div class="col-sm-3 my-2">
         <div class="card">
-            <a asp-controller="Line" asp-action="GetMonofilamentLines">
+            <a asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="2">
                 <img src="~/images/SubCatalog/MonofilamentLine.jpg" class="card-img-top" alt="Монофильная леска для рыбалки">
             </a>
 
             <div class="card-body">
                 <h5 class="card-title">Монофильная леска</h5>
                 @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
-                <a class="btn btn-primary" asp-controller="Line" asp-action="GetMonofilamentLines" role="button">Подробнее</a>
+                <a class="btn btn-primary" asp-controller="Line" asp-action="GetLines" role="button">Подробнее</a>
             </div>
         </div>
     </div>

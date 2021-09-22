@@ -24,6 +24,22 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetLines(int subCatalogId = 0)
+        {
+            Filter(cLine: subCatalogId);  //явный параметр
+            return View(new ProductShopCartViewModel(shopCart, subCatalogId));
+        }
+
+        [HttpPost]
+        public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150, int subCatalogId = 0)
+        {
+            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, cLine: subCatalogId);
+            return View(new ProductShopCartViewModel(shopCart, subCatalogId));
+        }
+
+
+        /*
+        [HttpGet]
         public ActionResult GetLines()
         {
             Filter();
@@ -36,8 +52,7 @@ namespace Ecommerce.Controllers
             Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150);
             return View(new ProductShopCartViewModel(shopCart));
         }
-
-
+                
         [HttpGet]
         public ActionResult GetBraidedLines()
         {
@@ -65,6 +80,7 @@ namespace Ecommerce.Controllers
             Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, cMonofilamentLine);
             return View("GetLines", new ProductShopCartViewModel(shopCart, "Монофильная леска", "GetMonofilamentLines"));
         }
+        */
 
         private void Filter(bool Unwinding_30 = false, bool Unwinding_100 = false, bool Unwinding_130 = false, bool Unwinding_150 = false, int cLine = 0)
         {
