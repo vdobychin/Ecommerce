@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,16 @@ namespace Ecommerce.ViewModels
         public ShopCart shopCart { get; set; }
         public int subCatalogId { get; set; }
         public string actionName { get; set; }
+
+        public List<SelectListItem> sortViewModel { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "0", Text = "Цена (возростание)" },
+            new SelectListItem { Value = "1", Text = "Цена (убывание)" },
+            //new SelectListItem { Value = "US", Text = "USA"  },
+        };
+        //public sortViewModel sort { get; set; }
+
+
         public ProductShopCartViewModel(ShopCart _shopCart, int _subCatalogId = 0)
         {
             shopCart = _shopCart;
@@ -29,16 +40,15 @@ namespace Ecommerce.ViewModels
 
         //Color
         public bool green { get; set; }
-        public bool transparent { get; set; } //прозрачный
+        public bool transparent { get; set; }
         public bool orange { get; set; }
         public bool darkGreen { get; set; }
         public bool lightGreen { get; set; }
         public bool pink { get; set; }
-
-
-
+        
+        
+       
         public Line Line { get; set; }
-
         public Product Product { get; set; }
     }
 }

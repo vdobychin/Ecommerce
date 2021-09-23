@@ -24,17 +24,17 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetLines(int subCatalogId = 0)
+        public ActionResult GetLines(int subCatalogId = 0, int sort = 0)
         {
-            Filter(cLine: subCatalogId);  //явный параметр
+            Filter(cLine: subCatalogId, sort: sort);  //явный параметр
             return View(new ProductShopCartViewModel(shopCart, subCatalogId));
         }
 
         [HttpPost]
         public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150, bool china, bool japan,
-            bool green, bool transparent, bool orange, bool darkGreen, bool lightGreen, bool pink, int subCatalogId = 0)
+            bool green, bool transparent, bool orange, bool darkGreen, bool lightGreen, bool pink, int subCatalogId = 0, int sort = 0)
         {
-            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, china, japan, green, transparent, orange, darkGreen, lightGreen, pink, cLine: subCatalogId);
+            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, china, japan, green, transparent, orange, darkGreen, lightGreen, pink, cLine: subCatalogId, sort: sort);
             return View(new ProductShopCartViewModel(shopCart, subCatalogId));
         }
 
@@ -84,7 +84,7 @@ namespace Ecommerce.Controllers
         */
 
         private void Filter(bool Unwinding_30 = false, bool Unwinding_100 = false, bool Unwinding_130 = false, bool Unwinding_150 = false, bool china = false, bool japan = false,
-            bool green = false, bool transparent = false, bool orange = false, bool darkGreen = false, bool lightGreen = false, bool pink = false, int cLine = 0)
+            bool green = false, bool transparent = false, bool orange = false, bool darkGreen = false, bool lightGreen = false, bool pink = false, int cLine = 0, int sort = 0)
         {
             IEnumerable<Line> lines;
 
@@ -114,6 +114,19 @@ namespace Ecommerce.Controllers
                 lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
 
             lines = CountryFilter.Any() ? lines.Where(i => CountryFilter.Contains(i.Country) || ColorFilter.Contains(i.Color)).ToList() : lines.ToList();
+
+            switch (sort)
+            {
+                case (int)Sort.OrderBy.priceAsc:
+                    lines = lines.OrderBy(x => x.Product.Price);
+                    break;
+                case (int)Sort.OrderBy.priceDesc:
+                    lines = lines.OrderByDescending(x => x.Product.Price);
+                    break;
+                default:
+                    lines = lines.OrderBy(x => x.Product.Price);
+                    break;
+            }
 
             ViewBag.products = lines;
         }

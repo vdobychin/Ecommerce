@@ -1,43 +1,39 @@
 ﻿@model Line
 
-<form method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId">
-    <div class="card mb-3">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="@Model.Product.Img" class="img-fluid rounded-start" alt="...">
+<!--<form method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId">-->
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="@Model.Product.Img" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-5">
+            <div class="card-body" style="display:inline-grid">
+                <h3 class="card-title">@Model.Product.Name</h3>
+                <span class="card-text">Артикул: @Model.ProductId</span>
+                <span class="card-text">Диаметр: @Model.Diameter</span>
+                <span class="card-text">Размотка: @Model.Unwinding</span>
+                <span class="card-text">Разрывная нагрузка, кг: @Model.BreakingLoad_kg</span>
+                @if (Model.BreakingLoad_lb > 0)
+                {
+                    <span class="card-text">Разрывная нагрузка, lb: @Model.BreakingLoad_lb</span>
+                }
+                <span class="card-text">Страна производитель: @Model.Country</span>
+                <span class="card-text">Цвет: @Model.Color</span>
             </div>
-            <div class="col-md-5">
-                <div class="card-body" style="display:inline-grid">
-                    <h3 class="card-title">@Model.Product.Name</h3>
-                    <span class="card-text">Артикул: @Model.ProductId</span>
-                    <span class="card-text">Диаметр: @Model.Diameter</span>
-                    <span class="card-text">Размотка: @Model.Unwinding</span>
-                    <span class="card-text">Разрывная нагрузка, кг: @Model.BreakingLoad_kg</span>
-
-                    @if (Model.BreakingLoad_lb > 0)
-                    {
-                        <span class="card-text">Разрывная нагрузка, lb: @Model.BreakingLoad_lb</span>
-                    }
-
-                    <span class="card-text">Страна производитель: @Model.Country</span>
-                    <span class="card-text">Цвет: @Model.Color</span>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card-body">
-                    <h3 class="text-primary font-weight-bold">@Model.Product.Price.ToString("C")</h3>
-                    <p class="card-text">В наличии: @Model.Product.Quantity шт.</p>
+        </div>
+        <div class="col-md-3">
+            <div class="card-body">
+                <h3 class="text-primary font-weight-bold">@Model.Product.Price.ToString("C")</h3>
+                <p class="card-text">В наличии: @Model.Product.Quantity шт.</p>
+                <form data-ajax-method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId">
                     <input type="submit" class="btn btn-primary" value="В корзину" />
-                </div>                
+                </form>
             </div>
         </div>
     </div>
-</form>
+</div>
 
-
-
-
-
+<!--</form>-->
 @*
     <div class="col-sm-6">
         <form method="post" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.Id">
