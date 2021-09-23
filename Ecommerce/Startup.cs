@@ -1,5 +1,6 @@
 using Ecommerce.Data;
 using Ecommerce.Models;
+using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,7 @@ namespace Ecommerce
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlite(connection));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

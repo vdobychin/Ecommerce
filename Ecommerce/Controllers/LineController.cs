@@ -14,8 +14,6 @@ namespace Ecommerce.Controllers
     {
         private DatabaseContext db;
         private ShopCart shopCart;
-        private const int cBraidedLine = 1;
-        private const int cMonofilamentLine = 2;
 
         public LineController(DatabaseContext _db, ShopCart _shopCart)
         {
@@ -23,88 +21,43 @@ namespace Ecommerce.Controllers
             shopCart = _shopCart;
         }
 
-        [HttpGet]
-        public ActionResult GetLines(int subCatalogId = 0, int sort = 0)
+        
+        public ActionResult GetLines(LineFilter lineFilter = null, int subCatalogId = 0, int selectedValue = 0)
         {
-            Filter(cLine: subCatalogId, sort: sort);  //явный параметр
-            return View(new ProductShopCartViewModel(shopCart, subCatalogId));
+            ViewBag.products = GetLinesFilter(lineFilter, cLine: subCatalogId, selectedValue: selectedValue);
+            return View(new LineViewModel(shopCart, subCatalogId, selectedValue));
         }
-
-        [HttpPost]
-        public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150, bool china, bool japan,
-            bool green, bool transparent, bool orange, bool darkGreen, bool lightGreen, bool pink, int subCatalogId = 0, int sort = 0)
-        {
-            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, china, japan, green, transparent, orange, darkGreen, lightGreen, pink, cLine: subCatalogId, sort: sort);
-            return View(new ProductShopCartViewModel(shopCart, subCatalogId));
-        }
-
 
         /*
-        [HttpGet]
-        public ActionResult GetLines()
-        {
-            Filter();
-            return View(new ProductShopCartViewModel(shopCart));
-        }
-
         [HttpPost]
-        public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150)
+        public ActionResult GetLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150, bool china, bool japan,
+            bool green, bool transparent, bool orange, bool darkGreen, bool lightGreen, bool pink, LineFilter lineFilter = null, int subCatalogId = 0, int selectedValue = 0)
         {
-            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150);
-            return View(new ProductShopCartViewModel(shopCart));
-        }
-                
-        [HttpGet]
-        public ActionResult GetBraidedLines()
-        {
-            Filter(cLine: cBraidedLine); //явный параметр
-            return View("GetLines", new ProductShopCartViewModel(shopCart, "Плетеный шнур", "GetBraidedLines"));
-        }
+            ViewBag.products = GetLinesFilter(lineFilter, cLine: subCatalogId, selectedValue: selectedValue);
+            return View(new LineViewModel(shopCart, subCatalogId, selectedValue, lineFilter));
+        }*/
 
-        [HttpPost]
-        public ActionResult GetBraidedLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150)
-        {
-            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, cBraidedLine);
-            return View("GetLines", new ProductShopCartViewModel(shopCart, "Плетеный шнур", "GetBraidedLines"));
-        }
-
-        [HttpGet]
-        public ActionResult GetMonofilamentLines()
-        {
-            Filter(cLine: cMonofilamentLine); //явный параметр
-            return View("GetLines", new ProductShopCartViewModel(shopCart, "Монофильная леска", "GetMonofilamentLines"));
-        }
-
-        [HttpPost]
-        public ActionResult GetMonofilamentLines(bool Unwinding_30, bool Unwinding_100, bool Unwinding_130, bool Unwinding_150)
-        {
-            Filter(Unwinding_30, Unwinding_100, Unwinding_130, Unwinding_150, cMonofilamentLine);
-            return View("GetLines", new ProductShopCartViewModel(shopCart, "Монофильная леска", "GetMonofilamentLines"));
-        }
-        */
-
-        private void Filter(bool Unwinding_30 = false, bool Unwinding_100 = false, bool Unwinding_130 = false, bool Unwinding_150 = false, bool china = false, bool japan = false,
-            bool green = false, bool transparent = false, bool orange = false, bool darkGreen = false, bool lightGreen = false, bool pink = false, int cLine = 0, int sort = 0)
+        private IEnumerable<Line> GetLinesFilter(LineFilter lineFilter, int cLine = 0, int selectedValue = 0)
         {
             IEnumerable<Line> lines;
 
             List<int> UnwindingFilter = new List<int>();
-            if (Unwinding_30) UnwindingFilter.Add(30);
-            if (Unwinding_100) UnwindingFilter.Add(100);
-            if (Unwinding_130) UnwindingFilter.Add(130);
-            if (Unwinding_150) UnwindingFilter.Add(150);
+            if (lineFilter.Unwinding_30) UnwindingFilter.Add(30);
+            if (lineFilter.Unwinding_100) UnwindingFilter.Add(100);
+            if (lineFilter.Unwinding_130) UnwindingFilter.Add(130);
+            if (lineFilter.Unwinding_150) UnwindingFilter.Add(150);
 
             List<string> CountryFilter = new List<string>();
-            if (china) CountryFilter.Add("Китай");
-            if (japan) CountryFilter.Add("Япония");
+            if (lineFilter.china) CountryFilter.Add("Китай");
+            if (lineFilter.japan) CountryFilter.Add("Япония");
 
             List<string> ColorFilter = new List<string>();
-            if (green) CountryFilter.Add("зеленый");
-            if (transparent) CountryFilter.Add("прозрачный");
-            if (orange) CountryFilter.Add("оранжевый");
-            if (darkGreen) CountryFilter.Add("темно-зеленый");
-            if (lightGreen) CountryFilter.Add("светло-зеленый");
-            if (pink) CountryFilter.Add("розовый");
+            if (lineFilter.green) CountryFilter.Add("зеленый");
+            if (lineFilter.transparent) CountryFilter.Add("прозрачный");
+            if (lineFilter.orange) CountryFilter.Add("оранжевый");
+            if (lineFilter.darkGreen) CountryFilter.Add("темно-зеленый");
+            if (lineFilter.lightGreen) CountryFilter.Add("светло-зеленый");
+            if (lineFilter.pink) CountryFilter.Add("розовый");
 
             //lines = FilterString.Any() ? db.Lines.Where(i => FilterString.Contains(i.Country)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
 
@@ -115,7 +68,7 @@ namespace Ecommerce.Controllers
 
             lines = CountryFilter.Any() ? lines.Where(i => CountryFilter.Contains(i.Country) || ColorFilter.Contains(i.Color)).ToList() : lines.ToList();
 
-            switch (sort)
+            switch (selectedValue)
             {
                 case (int)Sort.OrderBy.priceAsc:
                     lines = lines.OrderBy(x => x.Product.Price);
@@ -128,7 +81,7 @@ namespace Ecommerce.Controllers
                     break;
             }
 
-            ViewBag.products = lines;
+            return lines;
         }
     }
 }
