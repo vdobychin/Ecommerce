@@ -20,11 +20,10 @@ namespace Ecommerce.Controllers
             db = _db;
             shopCart = _shopCart;
         }
-
-        
-        public ActionResult GetLines(LineFilter lineFilter = null, int subCatalogId = 0, int selectedValue = 0)
+                
+        public ActionResult GetLines(LineFilter lineFilter = null, int selectedValue = 0, int subCatalogId = 0)
         {
-            ViewBag.products = GetLinesFilter(lineFilter, cLine: subCatalogId, selectedValue: selectedValue);
+            ViewBag.products = GetLinesFilter(lineFilter, subCatalogId: subCatalogId, selectedValue: selectedValue);
             return View(new LineViewModel(shopCart, subCatalogId, selectedValue));
         }
 
@@ -37,7 +36,7 @@ namespace Ecommerce.Controllers
             return View(new LineViewModel(shopCart, subCatalogId, selectedValue, lineFilter));
         }*/
 
-        private IEnumerable<Line> GetLinesFilter(LineFilter lineFilter, int cLine = 0, int selectedValue = 0)
+        private IEnumerable<Line> GetLinesFilter(LineFilter lineFilter, int subCatalogId = 0, int selectedValue = 0)
         {
             IEnumerable<Line> lines;
 
@@ -61,8 +60,8 @@ namespace Ecommerce.Controllers
 
             //lines = FilterString.Any() ? db.Lines.Where(i => FilterString.Contains(i.Country)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
 
-            if (cLine != 0)
-                lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding) && i.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList() : db.Lines.Where(x => x.Product.SubCatalog.Id == cLine).Include(x => x.Product).ToList();
+            if (subCatalogId != 0)
+                lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding) && i.Product.SubCatalog.Id == subCatalogId).Include(x => x.Product).ToList() : db.Lines.Where(x => x.Product.SubCatalog.Id == subCatalogId).Include(x => x.Product).ToList();
             else
                 lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
 

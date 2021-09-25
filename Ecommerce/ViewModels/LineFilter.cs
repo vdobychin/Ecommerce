@@ -29,5 +29,8 @@ namespace Ecommerce.ViewModels
         public bool lightGreen { get; set; }
         public bool pink { get; set; }
 
+        //price
+        public int priceFrom { get; set; }
+        public int priceTo { get; set; }
     }
 }

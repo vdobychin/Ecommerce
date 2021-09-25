@@ -1,9 +1,10 @@
-﻿@model Ecommerce.ViewModels.LineViewModel
+﻿@model LineViewModel
 
 <aside>
-    <div class="row">
-        <p>Фильтр</p>
-    </div>
+    @*
+        <div class="row">
+            <p>Фильтр</p>
+        </div>*@
     <div class="accordion" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -116,10 +117,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
+                    Прайс
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <h6>Цена</h6>
+                        <div class="row" style="display:inline">
+                            <span>C </span>
+                            @Html.EditorFor(m => m.lineFilter.priceFrom, new { htmlAttributes = new { @style = "width:80px" } })
+                            <span> - по </span>
+                            @Html.EditorFor(m => m.lineFilter.priceTo, new { htmlAttributes = new {  @style = "width:80px" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="my-3">
         <input type="submit" class="btn btn-primary" value="Применить фильтр" />
-    </div>       
+    </div>
 </aside>
 
 

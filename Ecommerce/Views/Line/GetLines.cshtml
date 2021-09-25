@@ -1,4 +1,4 @@
-﻿@model Ecommerce.ViewModels.LineViewModel
+﻿@model LineViewModel
 
 <form  asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId" asp-route-lineFilter="@Model.lineFilter">
     <div class="row">
@@ -31,12 +31,12 @@
                     </div>
                     <div class="col-4">
                         @*
-                            <div>
-                                <form id="SortForm" method="post" asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId">
-                                    <!--<select asp-items="Model.Countries" onchange="callChangefunc(this.value, @Model.subCatalogId)"></select>-->
-                                    <select id="sort" asp-items="Model.Countries" onchange="this.form.submit(this.value)"></select>
-                                </form>
-                            </div>
+                        <div>
+                            <form id="SortForm" method="post" asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId">
+                                <!--<select asp-items="Model.Countries" onchange="callChangefunc(this.value, @Model.subCatalogId)"></select>-->
+                                <select id="sort" asp-items="Model.Countries" onchange="this.form.submit(this.value)"></select>
+                            </form>
+                        </div>
                         *@
                         <div>
                             @Html.DropDownListFor(x => @Model.selectedValue, @Model.sortName, new { @onchange = "this.form.submit()" })
@@ -45,21 +45,27 @@
                 </div>
             </div>
         </div>
+        @*
+        <div class="col-3">
+            <div class="mb-3 p-2" style="border-radius: 5px; border: 1px solid rgba(0,0,0,.125);">
+                <a>Фильтр</a>
+            </div>
+        </div>*@
     </div>
 
-    <div class="row">
-        <div class="col-9">
-            @{
-                foreach (Line line in ViewBag.products)
-                {
-                    <partial name="~/Views/Shared/_ProductCard.cshtml" model="line" />
+        <div class="row">
+            <div class="col-9">
+                @{
+                    foreach (Line line in ViewBag.products)
+                    {
+                        <partial name="_LineCard" model="line" />
+                    }
                 }
-            }
+            </div>
+            <div class="col-3">
+                @await Html.PartialAsync("_LineFilter")
+            </div>
         </div>
-        <div class="col-3">
-            @await Html.PartialAsync("_LinesFilters")
-        </div>
-    </div>
 </form>
 
 
