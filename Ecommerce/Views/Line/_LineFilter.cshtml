@@ -1,162 +1,159 @@
 ﻿@model LineViewModel
 
-<aside>
-    @*
-        <div class="row">
-            <p>Фильтр</p>
-        </div>*@
-    <div class="accordion" id="accordionPanelsStayOpenExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    Размотка
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                <div class="accordion-body">
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.Unwinding_30, new { @Value = "false" })
-                            <a> 30 м </a>
-                        </span>
-                        @*
-                        <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
-                        <label class="form-check-label" for="Unwinding_30">
-                            30 м
-                        </label>
-                        *@
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.Unwinding_100, new { @Value = "false" })
-                            <a> 100 м </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.Unwinding_130, new { @Value = "false" })
-                            <a> 130 м </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.Unwinding_150, new { @Value = "false" })
-                            <a> 150 м </a>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                    Страна
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
-                <div class="accordion-body">
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.china, new { @Value = "false" })
-                            <a> Китай </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.japan, new { @Value = "false" })
-                            <a> Япония </a>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                    Цвет
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
-                <div class="accordion-body">
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.green, new { @Value = "false" })
-                            <a> зеленый </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.transparent, new { @Value = "false" })
-                            <a> прозрачный </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.orange, new { @Value = "false" })
-                            <a> оранжевый </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.darkGreen, new { @Value = "false" })
-                            <a> темно-зеленый </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.lightGreen, new { @Value = "false" })
-                            <a> светло-зеленый </a>
-                        </span>
-                    </div>
-                    <div class="form-check">
-                        <span class="filter_item">
-                            @Html.EditorFor(x => x.lineFilter.pink, new { @Value = "false" })
-                            <a> розовый </a>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
-                    Цена
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
-                <div class="accordion-body">
-                    <div class="form-check">
-                        @*<div class="row" style="display:inline">
-                            <span>от</span>
-                            @Html.TextBoxFor(m => m.lineFilter.priceFrom, new { @style = "width:80px", onkeydown = "MyFunction();", MaxLength = "5" })
-                            <span>до</span>
-                            @Html.TextBoxFor(m => m.lineFilter.priceTo, new { @style = "width:80px", onkeydown = "MyFunction();", MaxLength = "5" })
-                        </div>
+<form asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId" asp-route-lineFilter="@Model.lineFilter" asp-route-selectedValue="@Model.selectedValue">
+    <aside>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Размотка
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.Unwinding_30, new { @Value = "false" })
+                                <a> 30 м </a>
+                            </span>
+                            @*
+                                <input class="form-check-input" type="checkbox" value="30" name="Unwinding_30">
+                                <label class="form-check-label" for="Unwinding_30">
+                                    30 м
+                                </label>
                             *@
-                        <div class="row">
-                            <div class="col">
-                                <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.lineFilter.priceFrom">
-                            </div>
-                            <div class="col">
-                                <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.lineFilter.priceTo">
-                            </div>
                         </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.Unwinding_100, new { @Value = "false" })
+                                <a> 100 м </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.Unwinding_130, new { @Value = "false" })
+                                <a> 130 м </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.Unwinding_150, new { @Value = "false" })
+                                <a> 150 м </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                        Страна
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.china, new { @Value = "false" })
+                                <a> Китай </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.japan, new { @Value = "false" })
+                                <a> Япония </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                        Цвет
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.green, new { @Value = "false" })
+                                <a> зеленый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.transparent, new { @Value = "false" })
+                                <a> прозрачный </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.orange, new { @Value = "false" })
+                                <a> оранжевый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.darkGreen, new { @Value = "false" })
+                                <a> темно-зеленый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.lightGreen, new { @Value = "false" })
+                                <a> светло-зеленый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.lineFilter.pink, new { @Value = "false" })
+                                <a> розовый </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
+                        Цена
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            @*<div class="row" style="display:inline">
+                                    <span>от</span>
+                                    @Html.TextBoxFor(m => m.lineFilter.priceFrom, new { @style = "width:80px", onkeydown = "MyFunction();", MaxLength = "5" })
+                                    <span>до</span>
+                                    @Html.TextBoxFor(m => m.lineFilter.priceTo, new { @style = "width:80px", onkeydown = "MyFunction();", MaxLength = "5" })
+                                </div>
+                            *@
+                            <div class="row">
+                                <div class="col">
+                                    <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.lineFilter.priceFrom">
+                                </div>
+                                <div class="col">
+                                    <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.lineFilter.priceTo">
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="my-3">
-        <input type="submit" class="btn btn-primary" value="Применить фильтр" />
-    </div>
-</aside>
+        <div class="my-3">
+            <input type="submit" class="btn btn-primary" value="Применить фильтр" />
+        </div>
+    </aside>
+</form>
 
-
-<style>
-    .filter_item {
-        display: inline-block;
-        margin-right: 15px;
-    }
-</style>
+    <style>
+        .filter_item {
+            display: inline-block;
+            margin-right: 15px;
+        }
+    </style>

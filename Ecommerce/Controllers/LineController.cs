@@ -20,7 +20,7 @@ namespace Ecommerce.Controllers
             db = _db;
             shopCart = _shopCart;
         }
-                
+
         public ActionResult GetLines(LineFilter lineFilter = null, int selectedValue = 0, int subCatalogId = 0)
         {
             ViewBag.products = GetLinesFilter(lineFilter, subCatalogId: subCatalogId, selectedValue: selectedValue);

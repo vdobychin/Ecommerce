@@ -1,6 +1,6 @@
 ﻿@model LineViewModel
 
-<form asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId" asp-route-lineFilter="@Model.lineFilter">
+<form asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId" asp-route-lineFilter="@Model.lineFilter" asp-route-selectedValue="@Model.selectedValue">
     <div class="row">
         <div class="col-9">
             <div class="mb-3 p-2" style="border-radius: 5px; border: 1px solid rgba(0,0,0,.125);">
@@ -31,51 +31,45 @@
                     </div>
                     <div class="col-4">
                         @*
-                        <div>
-                            <form id="SortForm" method="post" asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId">
-                                <!--<select asp-items="Model.Countries" onchange="callChangefunc(this.value, @Model.subCatalogId)"></select>-->
-                                <select id="sort" asp-items="Model.Countries" onchange="this.form.submit(this.value)"></select>
-                            </form>
-                        </div>
+                            <div>
+                                <form id="SortForm" method="post" asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId">
+                                    <!--<select asp-items="Model.Countries" onchange="callChangefunc(this.value, @Model.subCatalogId)"></select>-->
+                                    <select id="sort" asp-items="Model.Countries" onchange="this.form.submit(this.value)"></select>
+                                </form>
+                            </div>
                         *@
                         <div>
-                            @Html.DropDownListFor(x => @Model.selectedValue, @Model.sortName, new { @onchange = "this.form.submit()" })
+                            @Html.DropDownListFor(x => @Model.selectedValue, @Model.sortName, new { @onchange = "this.form.submit()" }) @* @onchange = "document.location.href = '/Line/GetLines?selectedValue=' + this.value + '&subCatalogId=' + this.Model.subCatalogId;"           this.form.submit()*@
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @*
-        <div class="col-3">
-            <div class="mb-3 p-2" style="border-radius: 5px; border: 1px solid rgba(0,0,0,.125);">
-                <a>Фильтр</a>
-            </div>
-        </div>*@
     </div>
-
-        <div class="row">
-            <div class="col-9">
-                @{
-                    foreach (Line line in ViewBag.products)
-                    {
-                        <partial name="_LineCard" model="line" />
-                    }
-                }
-            </div>
-            <div class="col-3">
-                @await Html.PartialAsync("_LineFilter")
-            </div>
-        </div>
 </form>
+
+<div class="row">
+    <div class="col-9">
+        @{
+            foreach (Line line in ViewBag.products)
+            {
+                <partial name="_LineCard" model="line" />
+            }
+        }
+    </div>
+    <div class="col-3">
+        @await Html.PartialAsync("_LineFilter")
+    </div>
+</div>
+
 
 
 
 @*
     <script>
-        $.post(), function callChangefunc(val, subCatalogId) {
+        function callChangefunc(val, subCatalogId) {
             //$('#SortForm').submit(val);
-            //window.location.href = "/Line/GetLines?sort=" + val + "&subCatalogId=" + subCatalogId;
-            $.post(window.location.href = "/Line/GetLines?", { sort: val, subCatalogId: subCatalogId })
+            window.location.href = "/Line/GetLines?sort=" + val + "&subCatalogId=" + subCatalogId;
         }
     </script>
 *@
