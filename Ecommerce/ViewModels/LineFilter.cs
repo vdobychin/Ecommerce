@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace Ecommerce.ViewModels
         public bool pink { get; set; }
 
         //price
-        public int priceFrom { get; set; }
-        public int priceTo { get; set; }
+        public int? priceFrom { get; set; }
+        public int? priceTo { get; set; }               
     }
 }

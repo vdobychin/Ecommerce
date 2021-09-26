@@ -7,6 +7,7 @@ namespace Ecommerce.Models
 {
     public class Sort
     {
-        public enum OrderBy { priceAsc = 0, priceDesc = 1 };
+        public enum OrderBy { priceAsc = 0, priceDesc = 1, quantity = 2, name = 3 };
+
     }
 }

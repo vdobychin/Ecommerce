@@ -40,32 +40,37 @@ namespace Ecommerce.Controllers
         {
             IEnumerable<Line> lines;
 
-            List<int> UnwindingFilter = new List<int>();
-            if (lineFilter.Unwinding_30) UnwindingFilter.Add(30);
-            if (lineFilter.Unwinding_100) UnwindingFilter.Add(100);
-            if (lineFilter.Unwinding_130) UnwindingFilter.Add(130);
-            if (lineFilter.Unwinding_150) UnwindingFilter.Add(150);
+            List<int> UnwindingList = new List<int>();
+            if (lineFilter.Unwinding_30) UnwindingList.Add(30);
+            if (lineFilter.Unwinding_100) UnwindingList.Add(100);
+            if (lineFilter.Unwinding_130) UnwindingList.Add(130);
+            if (lineFilter.Unwinding_150) UnwindingList.Add(150);
 
-            List<string> CountryFilter = new List<string>();
-            if (lineFilter.china) CountryFilter.Add("Китай");
-            if (lineFilter.japan) CountryFilter.Add("Япония");
+            List<string> CountryList = new List<string>();
+            if (lineFilter.china) CountryList.Add("Китай");
+            if (lineFilter.japan) CountryList.Add("Япония");
 
-            List<string> ColorFilter = new List<string>();
-            if (lineFilter.green) CountryFilter.Add("зеленый");
-            if (lineFilter.transparent) CountryFilter.Add("прозрачный");
-            if (lineFilter.orange) CountryFilter.Add("оранжевый");
-            if (lineFilter.darkGreen) CountryFilter.Add("темно-зеленый");
-            if (lineFilter.lightGreen) CountryFilter.Add("светло-зеленый");
-            if (lineFilter.pink) CountryFilter.Add("розовый");
+            List<string> ColorList = new List<string>();
+            if (lineFilter.green) ColorList.Add("зеленый");
+            if (lineFilter.transparent) ColorList.Add("прозрачный");
+            if (lineFilter.orange) ColorList.Add("оранжевый");
+            if (lineFilter.darkGreen) ColorList.Add("темно-зеленый");
+            if (lineFilter.lightGreen) ColorList.Add("светло-зеленый");
+            if (lineFilter.pink) ColorList.Add("розовый");
 
             //lines = FilterString.Any() ? db.Lines.Where(i => FilterString.Contains(i.Country)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
 
             if (subCatalogId != 0)
-                lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding) && i.Product.SubCatalog.Id == subCatalogId).Include(x => x.Product).ToList() : db.Lines.Where(x => x.Product.SubCatalog.Id == subCatalogId).Include(x => x.Product).ToList();
+                lines = UnwindingList.Any() ? db.Lines.Where(i => UnwindingList.Contains(i.Unwinding) && i.Product.SubCatalog.Id == subCatalogId).Include(x => x.Product).ToList() : db.Lines.Where(x => x.Product.SubCatalog.Id == subCatalogId).Include(x => x.Product).ToList();
             else
-                lines = UnwindingFilter.Any() ? db.Lines.Where(i => UnwindingFilter.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
+                lines = UnwindingList.Any() ? db.Lines.Where(i => UnwindingList.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
 
-            lines = CountryFilter.Any() ? lines.Where(i => CountryFilter.Contains(i.Country) || ColorFilter.Contains(i.Color)).ToList() : lines.ToList();
+            lines = CountryList.Any() ? lines.Where(i => CountryList.Contains(i.Country) || ColorList.Contains(i.Color)).ToList() : lines.ToList();
+
+            if (lineFilter.priceFrom > 0)
+                lines = lines.Where(x => x.Product.Price >= lineFilter.priceFrom);
+            if (lineFilter.priceTo > 0)
+                lines = lines.Where(x => x.Product.Price <= lineFilter.priceTo);
 
             switch (selectedValue)
             {
@@ -74,6 +79,12 @@ namespace Ecommerce.Controllers
                     break;
                 case (int)Sort.OrderBy.priceDesc:
                     lines = lines.OrderByDescending(x => x.Product.Price);
+                    break;
+                case (int)Sort.OrderBy.quantity:
+                    lines = lines.OrderByDescending(x => x.Product.Quantity);
+                    break;
+                case (int)Sort.OrderBy.name:
+                    lines = lines.OrderBy(x => x.Product.Name);
                     break;
                 default:
                     lines = lines.OrderBy(x => x.Product.Price);

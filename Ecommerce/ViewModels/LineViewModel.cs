@@ -16,6 +16,8 @@ namespace Ecommerce.ViewModels
         {
             new SelectListItem { Value = "0", Text = "Цена (возростание)" },
             new SelectListItem { Value = "1", Text = "Цена (убывание)" },
+            new SelectListItem { Value = "2", Text = "Наличие" },
+            new SelectListItem { Value = "3", Text = "Название" },
         };
         public int selectedValue { get; set; }
 

@@ -121,19 +121,28 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
-                    Прайс
+                    Цена
                 </button>
             </h2>
             <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
                 <div class="accordion-body">
                     <div class="form-check">
-                        <h6>Цена</h6>
-                        <div class="row" style="display:inline">
-                            <span>C </span>
-                            @Html.EditorFor(m => m.lineFilter.priceFrom, new { htmlAttributes = new { @style = "width:80px" } })
-                            <span> - по </span>
-                            @Html.EditorFor(m => m.lineFilter.priceTo, new { htmlAttributes = new {  @style = "width:80px" } })
+                        @*<div class="row" style="display:inline">
+                            <span>от</span>
+                            @Html.TextBoxFor(m => m.lineFilter.priceFrom, new { @style = "width:80px", onkeydown = "MyFunction();", MaxLength = "5" })
+                            <span>до</span>
+                            @Html.TextBoxFor(m => m.lineFilter.priceTo, new { @style = "width:80px", onkeydown = "MyFunction();", MaxLength = "5" })
                         </div>
+                            *@
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.lineFilter.priceFrom">
+                            </div>
+                            <div class="col">
+                                <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.lineFilter.priceTo">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
