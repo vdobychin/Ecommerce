@@ -24,23 +24,29 @@ namespace Ecommerce.Controllers
         [HttpGet]
         public ActionResult GetLines(int selectedValue = 0, int subCatalogId = 0)
         {
-            ProductViewModel productViewModel = new()
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+
+            LineViewModel lineViewModel = new()
             {
                 db = db,
                 selectedValue = selectedValue,
                 subCatalogId = subCatalogId
             };
 
-            ViewBag.lines = productViewModel.getLines();
-            return View(productViewModel);
+            ViewBag.lines = lineViewModel.getLines();
+            return View(lineViewModel);
         }
 
         [HttpPost]
-        public ActionResult GetLines(ProductViewModel productViewModel)
+        public ActionResult GetLines(LineViewModel lineViewModel)
         {
-            productViewModel.db = db;
-            ViewBag.lines = productViewModel.getLines();
-            return View(productViewModel);
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+
+            lineViewModel.db = db;
+            ViewBag.lines = lineViewModel.getLines();
+            return View(lineViewModel);
         }       
     }
 }

@@ -18,15 +18,15 @@ namespace Ecommerce.Controllers
 
         public ViewResult Index()
         {
-            var items = shopCart.getShopItems();   //Список товаров в корзине
-            shopCart.listShopItems = items;
+            //var items = shopCart.getShopItems();   //Список товаров в корзине
+            //shopCart.listShopItems = items;
 
             /*var obj = new ShopCartViewModel
             {
                 //shopCart = _shopCart
                 listShopItems = items
             };*/
-            return View(items);
+            return View(shopCart);
         }
     }
 }

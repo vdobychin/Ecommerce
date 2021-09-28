@@ -23,7 +23,6 @@ namespace Ecommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //Разная корзина для разных пользователей
             services.AddScoped(sp => ShopCart.GetCart(sp));
@@ -53,9 +52,7 @@ namespace Ecommerce
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();           // Используем сессии
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

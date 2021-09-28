@@ -1,0 +1,73 @@
+﻿@model ReelViewModel
+
+<form method="post" asp-controller="Reel" asp-action="GetReels">
+    <div class="row">
+        <div class="col-9">
+            <div class="mb-3 p-2" style="border-radius: 5px; border: 1px solid rgba(0,0,0,.125);">
+                <div class="row">
+                    <div class="col-8">
+                        <div style="display: inline">
+                            @if (Model.subCatalogId != 0)
+                            {
+                                <a asp-controller="Home" asp-action="GetReels">Каталог</a>
+                                <span> - </span>
+                                <a asp-controller="Reel" asp-action="GetReels">Катушки</a>
+                                <span> - </span>
+                                @if (Model.subCatalogId == 5)
+                                {
+                                    <a asp-controller="Reel" asp-action="GetReels" asp-route-subCatalogId="5">Инерционные катушки</a>
+                                }
+                            }
+                            else
+                            {
+                                <a class="btn btn-secondary btn-sm" asp-action="GetReels" asp-route-subCatalogId="5" role="button">Инерционные катушки</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            @Html.DropDownListFor(x => @Model.selectedValue, @Model.sortName, new { @onchange = "this.form.submit()" })
+                            @Html.HiddenFor(x => @Model.subCatalogId)
+                            @Html.HiddenFor(x => @Model.diameter_50)
+                            @Html.HiddenFor(x => @Model.diameter_55)
+                            @Html.HiddenFor(x => @Model.diameter_65)
+                            @Html.HiddenFor(x => @Model.diameter_70)
+                            @Html.HiddenFor(x => @Model.diameter_75)
+                            @Html.HiddenFor(x => @Model.peers)
+                            @Html.HiddenFor(x => @Model.metalPlastic)
+                            @Html.HiddenFor(x => @Model.priceTo)
+                            @Html.HiddenFor(x => @Model.priceFrom)
+                            @Html.HiddenFor(x => @Model.weightTo)
+                            @Html.HiddenFor(x => @Model.weightFrom)
+                            @Html.HiddenFor(x => @Model.withTrigger)
+                            @Html.HiddenFor(x => @Model.stalker)
+                            @Html.HiddenFor(x => @Model.plastic)
+                            @Html.HiddenFor(x => @Model.green)
+                            @Html.HiddenFor(x => @Model.greenYellow)
+                            @Html.HiddenFor(x => @Model.lightGreen)
+                            @Html.HiddenFor(x => @Model.black)
+                            @Html.HiddenFor(x => @Model.blackOrange)
+                            @Html.HiddenFor(x => @Model.blackRed)
+                            @Html.HiddenFor(x => @Model.blackWhite)
+                            @Html.HiddenFor(x => @Model.beige)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-9">
+        @{
+            foreach (Reel reel in ViewBag.reels)
+            {
+                <partial name="_ReelCard" model="reel" />
+            }
+         }
+    </div>
+    <div class="col-3">
+        @await Html.PartialAsync("_ReelFilter")
+    </div>
+</div>

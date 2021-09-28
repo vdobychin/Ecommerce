@@ -14,7 +14,7 @@
                 <span class="card-text">Вес, гр: @Model.Weight</span>
                 @if (!String.IsNullOrEmpty(Model.Feature))
                 {
-                    <span class="card-text">Разрывная нагрузка, lb: @Model.Feature</span>
+                    <span class="card-text">Особенность: @Model.Feature</span>
                 }
                 <span class="card-text">Вес: @Model.Company</span>
                 <span class="card-text">Цвет: @Model.Color</span>
@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-3">
             <div class="card-body">
-                <h3 class="text-primary font-weight-bold">@Model.Product.Price.ToString("C")</h3>
+                <h3 class="text-primary font-weight-bold">@Model.Product.Price.ToString("C", new System.Globalization.CultureInfo("ru-RU"))</h3>
                 <p class="card-text">В наличии: @Model.Product.Quantity шт.</p>
                 <form data-ajax-method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId">
                     <input type="submit" class="btn btn-primary" value="В корзину" />

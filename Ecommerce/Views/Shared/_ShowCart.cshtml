@@ -1,7 +1,9 @@
 ﻿<div>
     <form asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
         <div>
-            <img src="~/images/shopping-cart.png" width="30" />
+            <a asp-controller="ShopCart" asp-action="Index">
+                <img src="~/images/shopping-cart.png" width="30" />
+            </a>
             <p>
                 @if (@ViewBag.TotalQuantity == null)
                 {
@@ -19,9 +21,9 @@
                 {
                     <span>На сумму: @ViewBag.TotalSum руб.<br /></span>
                 }
-            </p>            
+            </p>
             @*На сумму: @Model.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
-        На сумму: @ViewBag.TotalSum*@          
+        На сумму: @ViewBag.TotalSum*@
         </div>
     </form>
 </div>

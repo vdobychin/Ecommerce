@@ -9,12 +9,9 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.ViewModels
 {
-    public class ProductViewModel
+    public class LineViewModel
     {
         public DatabaseContext db;
-
-        public ReelFilter reelFilter { get; set; }
-
         public int subCatalogId { get; set; }
         public List<SelectListItem> sortName { get; set; } = Sort.sortName;
         public int selectedValue { get; set; }
@@ -71,8 +68,8 @@ namespace Ecommerce.ViewModels
             else
                 lines = UnwindingList.Any() ? db.Lines.Where(i => UnwindingList.Contains(i.Unwinding)).Include(x => x.Product).ToList() : db.Lines.Include(x => x.Product).ToList();
 
-            lines = CountryList.Any() ? lines.Where(i => CountryList.Contains(i.Country) || CountryList.Contains(i.Color)).ToList() : lines.ToList();
-            lines = ColorList.Any() ? lines.Where(i => ColorList.Contains(i.Country) || ColorList.Contains(i.Color)).ToList() : lines.ToList();
+            lines = CountryList.Any() ? lines.Where(i => CountryList.Contains(i.Country)).ToList() : lines.ToList();
+            lines = ColorList.Any() ? lines.Where(i => ColorList.Contains(i.Color)).ToList() : lines.ToList();
 
             if (priceFrom > 0)
                 lines = lines.Where(x => x.Product.Price >= priceFrom);
