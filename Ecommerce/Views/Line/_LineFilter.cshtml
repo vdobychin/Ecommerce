@@ -1,6 +1,6 @@
-﻿@model LineViewModel
+﻿@model ProductViewModel
 
-<form asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId" asp-route-lineFilter="@Model.lineFilter" asp-route-selectedValue="@Model.selectedValue">
+<form method="post" asp-controller="Line" asp-action="GetLines">
     <aside>
         <div class="accordion" id="accordionPanelsStayOpenExample">
             <div class="accordion-item">
@@ -13,7 +13,7 @@
                     <div class="accordion-body">
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.Unwinding_30, new { @Value = "false" })
+                                @Html.EditorFor(x => x.Unwinding_30, new { @Value = "false" })
                                 <a> 30 м </a>
                             </span>
                             @*
@@ -25,19 +25,19 @@
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.Unwinding_100, new { @Value = "false" })
+                                @Html.EditorFor(x => x.Unwinding_100, new { @Value = "false" })
                                 <a> 100 м </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.Unwinding_130, new { @Value = "false" })
+                                @Html.EditorFor(x => x.Unwinding_130, new { @Value = "false" })
                                 <a> 130 м </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.Unwinding_150, new { @Value = "false" })
+                                @Html.EditorFor(x => x.Unwinding_150, new { @Value = "false" })
                                 <a> 150 м </a>
                             </span>
                         </div>
@@ -54,13 +54,13 @@
                     <div class="accordion-body">
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.china, new { @Value = "false" })
+                                @Html.EditorFor(x => x.china, new { @Value = "false" })
                                 <a> Китай </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.japan, new { @Value = "false" })
+                                @Html.EditorFor(x => x.japan, new { @Value = "false" })
                                 <a> Япония </a>
                             </span>
                         </div>
@@ -77,37 +77,37 @@
                     <div class="accordion-body">
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.green, new { @Value = "false" })
+                                @Html.EditorFor(x => x.green, new { @Value = "false" })
                                 <a> зеленый </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.transparent, new { @Value = "false" })
+                                @Html.EditorFor(x => x.transparent, new { @Value = "false" })
                                 <a> прозрачный </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.orange, new { @Value = "false" })
+                                @Html.EditorFor(x => x.orange, new { @Value = "false" })
                                 <a> оранжевый </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.darkGreen, new { @Value = "false" })
+                                @Html.EditorFor(x => x.darkGreen, new { @Value = "false" })
                                 <a> темно-зеленый </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.lightGreen, new { @Value = "false" })
+                                @Html.EditorFor(x => x.lightGreen, new { @Value = "false" })
                                 <a> светло-зеленый </a>
                             </span>
                         </div>
                         <div class="form-check">
                             <span class="filter_item">
-                                @Html.EditorFor(x => x.lineFilter.pink, new { @Value = "false" })
+                                @Html.EditorFor(x => x.pink, new { @Value = "false" })
                                 <a> розовый </a>
                             </span>
                         </div>
@@ -133,10 +133,10 @@
                             *@
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.lineFilter.priceFrom">
+                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.priceFrom">
                                 </div>
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="MyFunction()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.lineFilter.priceTo">
+                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.priceTo">
                                 </div>
                             </div>
 
@@ -147,13 +147,8 @@
         </div>
         <div class="my-3">
             <input type="submit" class="btn btn-primary" value="Применить фильтр" />
+            @Html.HiddenFor(x => x.selectedValue)
+            @Html.HiddenFor(x => x.subCatalogId)
         </div>
     </aside>
 </form>
-
-    <style>
-        .filter_item {
-            display: inline-block;
-            margin-right: 15px;
-        }
-    </style>

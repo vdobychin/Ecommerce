@@ -1,0 +1,229 @@
+﻿@model ProductViewModel
+
+<form asp-controller="Reel" asp-action="Index" asp-route-subCatalogId="@Model.subCatalogId" asp-route-reelFilter="@Model.reelFilter" asp-route-selectedValue="@Model.selectedValue">
+    <aside>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Диаметр, мм
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.diameter_50, new { @Value = "false" })
+                                <a> 50 </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.diameter_55, new { @Value = "false" })
+                                <a> 55 </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.diameter_60, new { @Value = "false" })
+                                <a> 60 </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.diameter_65, new { @Value = "false" })
+                                <a> 65 </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.diameter_70, new { @Value = "false" })
+                                <a> 70 </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.diameter_75, new { @Value = "false" })
+                                <a> 75 </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                        Материал
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.plastic, new { @Value = "false" })
+                                <a> пластик </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.metalPlastic, new { @Value = "false" })
+                                <a> металл/пластик </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                        Компания
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.peers, new { @Value = "false" })
+                                <a> Пирс </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.stalker, new { @Value = "false" })
+                                <a> Сталкер </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                        Особенность
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.withTrigger, new { @Value = "false" })
+                                <a> С курком </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                        Цвет
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.green, new { @Value = "false" })
+                                <a> зеленый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.black, new { @Value = "false" })
+                                <a> черный </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.blackRed, new { @Value = "false" })
+                                <a> черно-красный </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.blackWhite, new { @Value = "false" })
+                                <a> черно-белый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.lightGreen, new { @Value = "false" })
+                                <a> салатовый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.blackOrange, new { @Value = "false" })
+                                <a> черно-оранжевый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.greenYellow, new { @Value = "false" })
+                                <a> зелено-желтый </a>
+                            </span>
+                        </div>
+                        <div class="form-check">
+                            <span class="filter_item">
+                                @Html.EditorFor(x => x.reelFilter.beige, new { @Value = "false" })
+                                <a> бежевый </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
+                        Цена
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.reelFilter.priceFrom">
+                                </div>
+                                <div class="col">
+                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.reelFilter.priceTo">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
+                        Вес, г
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
+                    <div class="accordion-body">
+                        <div class="form-check">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.reelFilter.weightFrom">
+                                </div>
+                                <div class="col">
+                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.reelFilter.weightTo">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-3">
+            <input type="submit" class="btn btn-primary" value="Применить фильтр" />
+        </div>
+    </aside>
+</form>

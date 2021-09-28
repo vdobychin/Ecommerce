@@ -1,6 +1,6 @@
-﻿@model LineViewModel
+﻿@model ProductViewModel
 
-<form asp-controller="Line" asp-action="GetLines" asp-route-subCatalogId="@Model.subCatalogId" asp-route-lineFilter="@Model.lineFilter" asp-route-selectedValue="@Model.selectedValue">
+<form method="post" asp-controller="Line" asp-action="GetLines">
     <div class="row">
         <div class="col-9">
             <div class="mb-3 p-2" style="border-radius: 5px; border: 1px solid rgba(0,0,0,.125);">
@@ -40,6 +40,21 @@
                         *@
                         <div>
                             @Html.DropDownListFor(x => @Model.selectedValue, @Model.sortName, new { @onchange = "this.form.submit()" }) @* @onchange = "document.location.href = '/Line/GetLines?selectedValue=' + this.value + '&subCatalogId=' + this.Model.subCatalogId;"           this.form.submit()*@
+                            @Html.HiddenFor(x => @Model.subCatalogId)
+                            @Html.HiddenFor(x => @Model.Unwinding_30)
+                            @Html.HiddenFor(x => @Model.Unwinding_100)
+                            @Html.HiddenFor(x => @Model.Unwinding_130)
+                            @Html.HiddenFor(x => @Model.Unwinding_150)
+                            @Html.HiddenFor(x => @Model.china)
+                            @Html.HiddenFor(x => @Model.japan)
+                            @Html.HiddenFor(x => @Model.green)
+                            @Html.HiddenFor(x => @Model.darkGreen)
+                            @Html.HiddenFor(x => @Model.lightGreen)
+                            @Html.HiddenFor(x => @Model.orange)
+                            @Html.HiddenFor(x => @Model.pink)
+                            @Html.HiddenFor(x => @Model.transparent)
+                            @Html.HiddenFor(x => @Model.priceFrom)
+                            @Html.HiddenFor(x => @Model.priceTo)
                         </div>
                     </div>
                 </div>
@@ -51,7 +66,7 @@
 <div class="row">
     <div class="col-9">
         @{
-            foreach (Line line in ViewBag.products)
+            foreach (Line line in ViewBag.lines)
             {
                 <partial name="_LineCard" model="line" />
             }

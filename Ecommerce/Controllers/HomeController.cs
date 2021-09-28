@@ -25,8 +25,11 @@ namespace Ecommerce.Controllers
         public IActionResult Index()
         {
             //ViewBag.products = db.Products.ToList();
-            LineViewModel lineViewModel = new LineViewModel(shopCart);
-            return View(lineViewModel);
+            //ProductViewModel productViewModel = new ProductViewModel() { shopCart = shopCart };
+            //return View(productViewModel);
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+            return View();
         }
 
         public IActionResult Privacy()
@@ -45,8 +48,12 @@ namespace Ecommerce.Controllers
             var item = db.Products.FirstOrDefault(i => i.ProductId == id);
             if (item != null)
                 shopCart.AddToCart(item, 1);
-
-            return PartialView("~/Views/Shared/_ShowCart.cshtml", new LineViewModel(shopCart));
+            
+            //return PartialView("~/Views/Shared/_ShowCart.cshtml", new ProductViewModel() { shopCart = shopCart});
+            
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+            return PartialView("~/Views/Shared/_ShowCart.cshtml");
         }
     }
 }

@@ -1,13 +1,27 @@
-﻿@model LineViewModel
-
-<div>
+﻿<div>
     <form asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
         <div>
             <img src="~/images/shopping-cart.png" width="30" />
             <p>
-                Товаров: &nbsp;&nbsp;@Model.shopCart.getTotalQuantityProductCart() шт.<br />
-                На сумму: @Model.shopCart.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
-            </p>
+                @if (@ViewBag.TotalQuantity == null)
+                {
+                    <span>Товаров:&nbsp;&nbsp;0 шт.<br /></span>
+                }
+                else
+                {
+                    <span>Товаров:&nbsp;&nbsp;@ViewBag.TotalQuantity шт.<br /></span>
+                }
+                @if (@ViewBag.TotalSum == null)
+                {
+                    <span>На сумму: 0 руб.<br /></span>
+                }
+                else
+                {
+                    <span>На сумму: @ViewBag.TotalSum руб.<br /></span>
+                }
+            </p>            
+            @*На сумму: @Model.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
+        На сумму: @ViewBag.TotalSum*@          
         </div>
     </form>
 </div>
