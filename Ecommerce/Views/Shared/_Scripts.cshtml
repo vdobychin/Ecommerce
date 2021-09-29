@@ -24,11 +24,10 @@
 
 @*
     <script>
-        $(function MyFunction() {
-            $("input[type=text]").keypress(function () {
+        function MyFunction() {
                 alert("Wow; Its Work!.")
-            });
-        });
+
+        }
     </script>
 *@
 
@@ -51,3 +50,14 @@
             window.location.href = "/Line/GetLines?sort=" + val + "&subCatalogId=" + subCatalogId;
         }
     </script>*@
+
+<script>
+    $(function () {
+        $('#modal-container').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var url = button.attr("href");
+            var modal = $(this);
+            modal.find('.modal-content').load(url);
+        });
+    });
+</script>

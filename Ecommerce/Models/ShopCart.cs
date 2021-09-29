@@ -18,7 +18,8 @@ namespace Ecommerce.Models
         }
 
         public string ShopCardId { get; set; }
-        public List<ShopCartItem> listShopItems { get; set; }
+        //public List<ShopCartItem> listShopItems { get; set; }
+        public ICollection<ShopCartItem> listShopItems { get; set; }
 
         public static ShopCart GetCart(IServiceProvider services)
         {
@@ -49,6 +50,14 @@ namespace Ecommerce.Models
             {
                 shopCartItem.Quantity += quantity;
             }
+            db.SaveChanges();
+        }
+
+        public void DeleteToCard(int id)
+        {
+            ShopCartItem shopCartItem;
+            shopCartItem = db.ShopCartItems.Where(g => g.Id == id && g.ShopCartId == ShopCardId).FirstOrDefault();
+            db.ShopCartItems.Remove(shopCartItem);
             db.SaveChanges();
         }
 
