@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,10 +10,15 @@ namespace Ecommerce.Models
     {
         [Key]
         public int ProductId { get; set; }      //Ключ
-        public string Name { get; set; }        //Имя
+        [DisplayName("Имя")]
+        public string Name { get; set; }
         public string Img { get; set; }         //Url картнки
-        public decimal Price { get; set; }      //Цена
+
+        [DisplayName("Цена")]
+        public decimal Price { get; set; }
         public bool isFavourite { get; set; }   //Для отображения при старте
+
+        [DisplayName("Наличие")]
         public int? Quantity { get; set; }      //Количество (В наличии)
 
         //[ForeignKey("CatalogId")]

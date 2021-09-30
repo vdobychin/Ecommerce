@@ -1,5 +1,11 @@
 ﻿@model Line
 
+<div id="modal-container" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
@@ -24,9 +30,18 @@
             <div class="card-body">
                 <h3 class="text-primary font-weight-bold">@Model.Product.Price.ToString("C", new System.Globalization.CultureInfo("ru-RU"))</h3>
                 <p class="card-text">В наличии: @Model.Product.Quantity шт.</p>
-                <form data-ajax-method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId">
-                    <input type="submit" class="btn btn-primary" value="В корзину"/>
-                </form>
+                @*<form data-ajax-method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId">
+        <input type="submit" class="btn btn-primary" value="В корзину" />*@
+                @*</form>*@
+                <a class="btn btn-success" data-ajax-method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId" >
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-basket" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.243 1.071a.5.5 0 0 1 .686.172l3 5a.5.5 0 1 1-.858.514l-3-5a.5.5 0 0 1 .172-.686zm-4.486 0a.5.5 0 0 0-.686.172l-3 5a.5.5 0 1 0 .858.514l3-5a.5.5 0 0 0-.172-.686z" />
+                        <path fill-rule="evenodd" d="M1 7v1h14V7H1zM.5 6a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h15a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5H.5z" />
+                        <path fill-rule="evenodd" d="M14 9H2v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9zM2 8a1 1 0 0 0-1 1v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9a1 1 0 0 0-1-1H2z" />
+                        <path fill-rule="evenodd" d="M4 10a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 1 1-1 0v-3a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                    В корзину                  
+                </a>
             </div>
         </div>
     </div>

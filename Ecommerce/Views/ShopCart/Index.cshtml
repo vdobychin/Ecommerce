@@ -5,9 +5,15 @@
         <div class="modal-content"></div>
     </div>
 </div>
+<div id="modal-container2" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 
 
-@if (Model == null)
+@if (Model.Count() == 0)
 {
     <div style="margin-top: 20px; margin-bottom: 400px; font: normal 100%/2.1 PT Sans,Arial,sans-serif; font-size: 20px;">
         <h4>
@@ -18,57 +24,84 @@
 }
 else
 {
-    
-        <h3><em>Ваша корзина</em></h3>
-        <table class="table">
-            <thead>
+    <h3><em>Ваша корзина</em></h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Product.Name)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Product.Price)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Quantity)</th>
+                <th scope="col">Сумма</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Select((value, i) => (value, i)))
+            {
                 <tr>
-                    <th></th>
-                    <th>@Html.DisplayNameFor(x => x.Product.ProductId)</th>
-                    <th>@Html.DisplayNameFor(x => x.Product.Name)</th>
-                    <th>@Html.DisplayNameFor(x => x.Product.Price)</th>
-                    <th>Количество</th>
-                    <th>Сумма</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
+                    <td>@(item.i + 1)</td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Product.Img)
+                        <div class="imgcart">
+                            <img src="@item.value.Product.Img" />
+                        </div>
+                    </td>
+                    <td>@Html.HiddenFor(modelItem => item.value.Product.ProductId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.value.Product.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.value.Price)</td>
+                    <td>
+                        <div class="def-number-input number-input safari_only">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus" asp-controller="ShopCart" asp-action="UpdateCard"></button>
+                            <input id="quantity" name="quantity" class="quantity" min="1" value=@item.value.Quantity.ToString() type="number">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus" asp-controller="ShopCart" asp-action="UpdateCard"></button>
+                        </div>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Product.ProductId)
+                        <p>@((item.value.Quantity * item.value.Price).ToString("C", new System.Globalization.CultureInfo("ru-RU")))</p>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Product.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td>
-                        @*<a class="btn btn-success" asp-action="VerificationDeleteToCart" asp-controller="ShopCart" asp-route-id="@item.Product.ProductId" data-bs-target="#modal-container" data-bs-toggle="modal">Добавить в корзину</a>*@
-
-                        <a class="btn btn-danger" asp-action="VerificationDeleteToCart" asp-controller="ShopCart" asp-route-ProductId="@item.Product.ProductId" data-bs-target="#modal-container" data-bs-toggle="modal">
+                        <a class="btn btn-danger" asp-action="VerificationDeleteToCart" asp-controller="ShopCart" asp-route-ProductId="@item.value.Product.ProductId" data-bs-target="#modal-container" data-bs-toggle="modal">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                             </svg>
                         </a>
-
-                        @*<a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteProduct" asp-action="VerificationDelteToCart" asp-controller="ShopCart" asp-route-id="@item.Product.ProductId">
-            Delete
-        </a>*@
-
                     </td>
-                        </tr>
-                         }
-                    </tbody>
-                </table>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td align="right"><b>Итого:</b></td>
+                <td><b>@ViewBag.TotalSum ₽</b></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4">            
+            <a class="btn btn-primary" asp-controller="ShopCart" asp-action="Order" data-bs-target="#modal-container2" data-bs-toggle="modal" role="button">
+                Оформить заказ
+            </a>            
+        </div>
+    </div>
+}
 
+
+<style>
+    .imgcart {
+        height: 100px;
+        width: 100px;
+    }
+
+        .imgcart img {
+            max-width: 100%;
+            max-height: 100%;
         }
+</style>

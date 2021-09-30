@@ -48,5 +48,11 @@ namespace Ecommerce.Controllers
             return PartialView(shopCartItem);
         }
 
+        public ActionResult Order()
+        {
+            //ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.Product.ProductId == ProductId && g.ShopCartId == shopCart.ShopCardId).Include(x => x.Product).FirstOrDefault();
+            //Product product = db.Products.Where(g => g.ProductId == id).FirstOrDefault();
+            return PartialView();
+        }
     }
 }

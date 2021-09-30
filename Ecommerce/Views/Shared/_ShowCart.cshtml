@@ -15,11 +15,11 @@
                 }
                 @if (@ViewBag.TotalSum == null)
                 {
-                    <span>На сумму: 0 руб.<br /></span>
+                    <span>На сумму: 0 ₽<br /></span>
                 }
                 else
                 {
-                    <span>На сумму: @ViewBag.TotalSum руб.<br /></span>
+                    <span>На сумму: @ViewBag.TotalSum ₽<br /></span>
                 }
             </p>
             @*На сумму: @Model.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
