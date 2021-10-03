@@ -72,6 +72,16 @@ namespace Ecommerce.Models
             db.SaveChanges();
         }
 
+        public void UpdateToCard(int id, int quantity)
+        {
+            ShopCartItem shopCartItem;
+            //shopCartItem = appDBContent.ShopCartItem.FirstOrDefault(x => x.Id == id);
+            shopCartItem = db.ShopCartItems.Where(g => g.Id == id && g.ShopCartId == ShopCardId).FirstOrDefault();
+            shopCartItem.Quantity = quantity;
+            db.ShopCartItems.Update(shopCartItem);
+            db.SaveChanges();
+        }
+
         public List<ShopCartItem> getShopItems()    //Список товаров в корзине
         {
             return db.ShopCartItems.Where(a => a.ShopCartId == ShopCardId).Include(a => a.Product).ToList();

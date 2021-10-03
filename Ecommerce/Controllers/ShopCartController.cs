@@ -40,6 +40,18 @@ namespace Ecommerce.Controllers
             return View(shopCart.listShopItems);
         }
 
+        public RedirectToActionResult UpdateCard(/*int id, int quantity*/)
+        {
+            //_shopCart.UpdateToCard(id, quantity);
+            string[] id = Request.Form["id"];// frc.GetValues("quantity");
+            string[] quantity = Request.Form["quantity"];// frc.GetValues("quantity");
+            for (int i = 0; i < id.Length; i++)
+            {
+                shopCart.UpdateToCard(Convert.ToInt32(id[i]), Convert.ToInt32(quantity[i]));
+            }
+            return RedirectToAction("Index");
+        }
+
         //Удаление записи  из корзины        
         public RedirectToActionResult DeleteCard(int shopCartItemId)
         {
