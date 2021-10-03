@@ -9,14 +9,22 @@
                         <div style="display: inline">
                             @if (Model.subCatalogId != 0)
                             {
-                                <a asp-controller="Home" asp-action="GetReels">Каталог</a>
-                                <span> - </span>
-                                <a asp-controller="Reel" asp-action="GetReels">Катушки</a>
-                                <span> - </span>
-                                @if (Model.subCatalogId == 5)
-                                {
-                                    <a asp-controller="Reel" asp-action="GetReels" asp-route-subCatalogId="5">Инерционные катушки</a>
-                                }
+                                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a asp-controller="Home" asp-action="Index">Каталог</a>
+                                        </li>
+                                        <li class="breadcrumb-item active">
+                                            <a asp-controller="Reel" asp-action="GetReels">Катушки</a>
+                                        </li>
+                                        @if (Model.subCatalogId == 5)
+                                        {
+                                            <li class="breadcrumb-item active" aria-current="page">
+                                                <a asp-controller="Reel" asp-action="GetReels" asp-route-subCatalogId="5">Инерционные катушки</a>
+                                            </li>
+                                        }
+                                    </ol>
+                                </nav>
                             }
                             else
                             {

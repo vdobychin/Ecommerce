@@ -1,8 +1,8 @@
 ﻿<div>
     <form asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
         <div>
-            <a asp-controller="ShopCart" asp-action="Index">
-                <img src="~/images/shopping-cart.png" width="30" />
+            <a asp-controller="ShopCart" asp-action="Index" >
+                <img src="~/images/shopping-cart.png" width="30" data-bs-toggle="tooltip" title="Перейти в корзину"/>
             </a>
             <p>
                 @if (@ViewBag.TotalQuantity == null)

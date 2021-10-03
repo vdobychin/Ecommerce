@@ -1,7 +1,14 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace Ecommerce.Controllers
@@ -53,6 +60,33 @@ namespace Ecommerce.Controllers
             //ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.Product.ProductId == ProductId && g.ShopCartId == shopCart.ShopCardId).Include(x => x.Product).FirstOrDefault();
             //Product product = db.Products.Where(g => g.ProductId == id).FirstOrDefault();
             return PartialView();
+        }
+
+        public ActionResult OrderOk(string Name, string Patronymic, string LastName, string Phone, string Email)
+        {
+            var shopCartItems = db.ShopCartItems.Where(x => x.ShopCartId == shopCart.ShopCardId).Include(x => x.Product).ToList();
+            Order order = null;
+            if (shopCartItems.Count() != 0)
+            {
+                order = new()
+                {
+                    ShopCartId = shopCart.ShopCardId,
+                    Name = Name,
+                    Patronymic = Patronymic,
+                    LastName = LastName,
+                    Phone = Phone,
+                    Email = Email,
+                    TotalSum = shopCart.getTotalSumProductCart()
+                };
+                db.Orders.Add(order);
+                db.SaveChanges();
+
+                ShopCart.NewSession();
+            }
+            ViewBag.ShopCartItem = shopCartItems;
+            //Email email = new();
+            //email.Send(Email);
+            return View(order);
         }
     }
 }
