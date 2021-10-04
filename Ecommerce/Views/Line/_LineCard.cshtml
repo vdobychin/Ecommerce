@@ -9,27 +9,27 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
-            <img src="@Model.Product.Img" class="img-fluid rounded-start" alt="...">
+            <img src="@Model.Product.Img" class="img-fluid rounded-start" alt="@Model.Product.Name">
         </div>
         <div class="col-md-5">
             <div class="card-body" style="display:inline-grid">
-                <h3 class="card-title">@Model.Product.Name</h3>
-                <span class="card-text">Артикул: @Model.ProductId</span>
-                <span class="card-text">Диаметр: @Model.Diameter</span>
-                <span class="card-text">Размотка: @Model.Unwinding</span>
-                <span class="card-text">Разрывная нагрузка, кг: @Model.BreakingLoad_kg</span>
+                <h5 class="card-title">@Model.Product.Name</h5>
+                <span class="card-text"><font class="line_card">Артикул: </font><font>@Model.ProductId</font></span>
+                <span class="card-text"><font class="line_card">Диаметр: </font><font>@Model.Diameter</font></span>
+                <span class="card-text"><font class="line_card">Размотка: </font><font>@Model.Unwinding</font></span>
+                <span class="card-text"><font class="line_card">Разрывная нагрузка, кг: </font><font>@Model.BreakingLoad_kg</font></span>
                 @if (Model.BreakingLoad_lb > 0)
                 {
-                    <span class="card-text">Разрывная нагрузка, lb: @Model.BreakingLoad_lb</span>
+                    <span class="card-text"><font class="line_card">Разрывная нагрузка, lb: </font><font>@Model.BreakingLoad_lb</font></span>
                 }
-                <span class="card-text">Страна производитель: @Model.Country</span>
-                <span class="card-text">Цвет: @Model.Color</span>
+                <span class="card-text"><font class="line_card">Страна производитель: </font><font>@Model.Country</font></span>
+                <span class="card-text"><font class="line_card">Цвет: </font><font>@Model.Color</font></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card-body">
                 <h3 class="text-primary font-weight-bold">@Model.Product.Price.ToString("C", new System.Globalization.CultureInfo("ru-RU"))</h3>
-                <p class="card-text">В наличии: @Model.Product.Quantity шт.</p>
+                <p class="card-text"><font color="gray" size="2">В наличии: </font>@Model.Product.Quantity шт.</p>
                 @*<form data-ajax-method="post" asp-controller="Home" asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart" asp-route-id="@Model.ProductId">
         <input type="submit" class="btn btn-primary" value="В корзину" />*@
                 @*</form>*@
@@ -46,3 +46,12 @@
         </div>
     </div>
 </div>
+
+
+<style>
+    .line_card {
+        font-size: 13px;
+        font-family: Ubuntu,sans-serif;
+        color: gray;
+    }
+</style>

@@ -28,6 +28,7 @@ namespace Ecommerce.Controllers
         {
             ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
             ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+            ViewBag.OrderId = false;
 
             //var items = shopCart.getShopItems();   //Список товаров в корзине
             shopCart.listShopItems = shopCart.getShopItems();
@@ -43,11 +44,13 @@ namespace Ecommerce.Controllers
         public RedirectToActionResult UpdateCard(/*int id, int quantity*/)
         {
             //_shopCart.UpdateToCard(id, quantity);
-            string[] id = Request.Form["id"];// frc.GetValues("quantity");
+            string[] id = Request.Form["ProductId"];// frc.GetValues("quantity");
             string[] quantity = Request.Form["quantity"];// frc.GetValues("quantity");
             for (int i = 0; i < id.Length; i++)
             {
-                shopCart.UpdateToCard(Convert.ToInt32(id[i]), Convert.ToInt32(quantity[i]));
+                int a = Convert.ToInt32(quantity[i]);
+                int b = Convert.ToInt32(id[i]);
+                shopCart.UpdateToCard(b, a);
             }
             return RedirectToAction("Index");
         }
@@ -67,7 +70,7 @@ namespace Ecommerce.Controllers
             return PartialView(shopCartItem);
         }
 
-        public ActionResult Order()
+        public ActionResult CreateOrder()
         {
             //ShopCartItem shopCartItem = db.ShopCartItems.Where(g => g.Product.ProductId == ProductId && g.ShopCartId == shopCart.ShopCardId).Include(x => x.Product).FirstOrDefault();
             //Product product = db.Products.Where(g => g.ProductId == id).FirstOrDefault();

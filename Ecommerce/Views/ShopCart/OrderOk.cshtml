@@ -2,11 +2,11 @@
 
 @if (Model == null)
 {
-    <p>Заказ оформлен</p>
+    <p>Заказ уже оформлен. На Ваш электронный адрес, отправлено письмо с деталями заказа.</p>
 }
 else
 {
-    <div class="p-4" style="height: 75vh; background-color: ghostwhite;">
+    <div class="p-4" style="background-color: ghostwhite;">
         <div class="row">
             <font size="6" face="Arial">
                 <b>
@@ -52,7 +52,7 @@ else
 
             <tr>
                 <td colspan="2">
-                    @Model.Name @Model.LastName<br />@Model.Phone
+                    @Model.Name @Model.LastName<br />+7 @Model.Phone
                 </td>
             </tr>
         </table>
@@ -67,7 +67,7 @@ else
         <br />
         <div class="row" style="display:inline-block">
             <font size="4" color="darkblue"><b>Детали заказа:</b></font>
-            <partial name="OrderDetails" model="@ViewBag.ShopCartItem" />
+            <partial name="_OrderDetails" model="@ViewBag.ShopCartItem" />
         </div>
     </div>
 }

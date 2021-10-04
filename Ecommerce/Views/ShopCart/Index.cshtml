@@ -25,12 +25,12 @@
 else
 {
     <h3><em>Ваша корзина</em></h3>
-    <partial name="OrderDetails" model="@Model" />
+    <partial name="_OrderDetails" model="@Model" />
     
     <div class="row">
         <div class="col-8"></div>
         <div class="col-4">
-            <a class="btn btn-primary" asp-controller="ShopCart" asp-action="Order" data-bs-target="#modal-container2" data-bs-toggle="modal" role="button">
+            <a class="btn btn-primary" asp-controller="ShopCart" asp-action="CreateOrder" data-bs-target="#modal-container2" data-bs-toggle="modal" role="button">
                 Оформить заказ
             </a>
         </div>

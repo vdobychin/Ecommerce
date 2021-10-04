@@ -76,7 +76,7 @@ namespace Ecommerce.Models
         {
             ShopCartItem shopCartItem;
             //shopCartItem = appDBContent.ShopCartItem.FirstOrDefault(x => x.Id == id);
-            shopCartItem = db.ShopCartItems.Where(g => g.Id == id && g.ShopCartId == ShopCardId).FirstOrDefault();
+            shopCartItem = db.ShopCartItems.Where(g => g.Product.ProductId == id && g.ShopCartId == ShopCardId).FirstOrDefault();
             shopCartItem.Quantity = quantity;
             db.ShopCartItems.Update(shopCartItem);
             db.SaveChanges();
