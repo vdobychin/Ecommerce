@@ -12,8 +12,15 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
                     </li>
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a class="nav-link text-dark" asp-controller="Admin" asp-action="LogOff">Lof Off</a>
+                        </li>
+                    }
+                    
                 </ul>
                 <div class="mx-5">
                     <p class="fs-6 fw-bold lh-sm">Бесплатная консультация:<br />8(888) 888-88-88</p>

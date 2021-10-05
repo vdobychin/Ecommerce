@@ -14,5 +14,6 @@ namespace Ecommerce.Data
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Reel> Reels { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Login> Logins { get; set; }
     }
 }

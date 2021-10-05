@@ -187,10 +187,10 @@
                         <div class="form-check">
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.priceFrom">
+                                    <input type="number" id="validPressKeyReelPriceFrom" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.priceFrom">
                                 </div>
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.priceTo">
+                                    <input type="number" id="validPressKeyReelPriceTo" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.priceTo">
                                 </div>
                             </div>
 
@@ -210,10 +210,10 @@
                         <div class="form-check">
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.weightFrom">
+                                    <input type="number" id="validPressKeyReelWeightFrom" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.weightFrom">
                                 </div>
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.weightTo">
+                                    <input type="number" id="validPressKeyReelWeightTo" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.weightTo">
                                 </div>
                             </div>
 

@@ -133,10 +133,10 @@
                             *@
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.priceFrom">
+                                    <input type="number" id="validPressKeyLinePriceFrom" min="0" onkeydown="PriceValid()" class="form-control" placeholder="от" aria-label="от" asp-for="@Model.priceFrom">
                                 </div>
                                 <div class="col">
-                                    <input type="number" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.priceTo">
+                                    <input type="number" id="validPressKeyLinePriceTo" min="0" onkeydown="PriceValid()" class="form-control" placeholder="до" aria-label="до" asp-for="@Model.priceTo">
                                 </div>
                             </div>
 
