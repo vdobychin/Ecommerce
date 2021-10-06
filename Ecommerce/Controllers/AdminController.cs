@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class AdminController : Controller
     {
         private DatabaseContext db;
@@ -82,11 +82,31 @@ namespace Ecommerce.Controllers
             return Redirect(loginViewModel.ReturnUrl);
         }
 
-
         public IActionResult LogOff()
         {
             HttpContext.SignOutAsync("Cookie");
             return Redirect("/Home/Index");
+        }
+
+        [HttpGet]
+        public IActionResult Register(string ReturnUrl)
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel registerViewModel)//(string ReturnUrl, string Name, string Patronymic, string LastName, string Phone, string Email, string Password)
+        {
+            User user = null;
+           /* user = new()
+            {
+                Name = Name,
+                Patronymic = Patronymic,
+                LastName = LastName,
+                Phone = Phone,
+                Email = Email
+            };*/
+
+            return Redirect(registerViewModel.ReturnUrl);
         }
     }
 }

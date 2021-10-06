@@ -11,13 +11,9 @@ namespace Ecommerce.Models
     public class Order
     {
         [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Patronymic { get; set; }
-        public string LastName { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        public int Id { get; set; }        
         public string ShopCartId { get; set; }
         public decimal TotalSum { get; set; }
+        public virtual User User { get; set; }
     }
 }

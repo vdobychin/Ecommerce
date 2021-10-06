@@ -157,3 +157,9 @@ body {
     display: inline-block;
     margin-right: 15px;
 }
+
+@media only screen and (max-device-width: 992px) {
+    div.login .dropdown:hover .dropdown-menu {
+        display: none;
+    }
+}

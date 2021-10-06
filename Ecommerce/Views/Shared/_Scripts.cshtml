@@ -8,7 +8,7 @@
 <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="~/js/site.js" asp-append-version="true"></script>
-
+<script src="~/js/all.js"></script>
 @*
     <script>
         $(document).ready(function () {
@@ -61,10 +61,19 @@
         });
     });
 </script>
-
 <script>
     $(function () {
         $('#modal-container2').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var url = button.attr("href");
+            var modal = $(this);
+            modal.find('.modal-content').load(url);
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('#modal-container3').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var url = button.attr("href");
             var modal = $(this);
@@ -86,7 +95,7 @@
 <script>
     function phonenumber(obj) {
         var numbers = obj.value.replace(/\D/g, ''),
-            char = { 0: '(', 3: ') ', 6: '-', 8: '-'};
+            char = { 0: '(', 3: ') ', 6: '-', 8: '-' };
         obj.value = '';
         for (var i = 0; i < numbers.length; i++) {
             obj.value += (char[i] || '') + numbers[i];

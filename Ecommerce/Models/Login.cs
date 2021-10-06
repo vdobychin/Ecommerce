@@ -15,5 +15,6 @@ namespace Ecommerce.Models
         public string Salt { get; set; }
         public string Hash { get; set; }
         public string Role { get; set; }
+        public virtual User User { get; set; }
     }
 }

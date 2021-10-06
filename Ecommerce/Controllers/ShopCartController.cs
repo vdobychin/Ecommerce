@@ -86,11 +86,11 @@ namespace Ecommerce.Controllers
                 order = new()
                 {
                     ShopCartId = shopCart.ShopCardId,
-                    Name = Name,
-                    Patronymic = Patronymic,
-                    LastName = LastName,
-                    Phone = Phone,
-                    Email = Email,
+                    //Name = Name,
+                    //Patronymic = Patronymic,
+                    //LastName = LastName,
+                    //Phone = Phone,
+                    //Email = Email,
                     TotalSum = shopCart.getTotalSumProductCart()
                 };
                 db.Orders.Add(order);

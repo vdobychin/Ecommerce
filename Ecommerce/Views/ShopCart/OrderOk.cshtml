@@ -52,14 +52,14 @@ else
 
             <tr>
                 <td colspan="2">
-                    @Model.Name @Model.LastName<br />+7 @Model.Phone
+                    @Model.User.Name @Model.User.LastName<br />+7 @Model.User.Phone
                 </td>
             </tr>
         </table>
         <br />
         <br />
         <div class="row">
-            <p>Уважаемый @Model.Name, спасибо за Ваш заказ! Номер и детали заказа отправлены Вам на электронную почту: @Model.Email</p>
+            <p>Уважаемый @Model.User.Name, спасибо за Ваш заказ! Номер и детали заказа отправлены Вам на электронную почту: @Model.User.Email</p>
             <p>Мы свяжемся с Вами в ближайшее время</p>
         </div>
 
