@@ -7,7 +7,6 @@
     </div>
     <div class="modal-body">
         <div class="form-horizontal">
-            <input hidden asp-for="ReturnUrl" />
             <div class="col">
                 <label asp-for="User.Name" class="form-label">Имя <font color="red">*</font></label>
                 <input asp-for="User.Name" class="form-control" id="inputName" />
@@ -19,35 +18,41 @@
             </div>
             <div class="col">
                 <label asp-for="User.LastName" class="form-label">Фамилия <font color="red">*</font></label>
-                <input asp-for="User.LastName" type="text" class="form-control" id="inputLastName" required />
+                <input asp-for="User.LastName" type="text" class="form-control" id="inputLastName" />
+                <span asp-validation-for="User.LastName" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="User.Phone" class="form-label">Телефон <font color="red">*</font></label>
                 <div class="input-group">
                     <font class="input-group-text" color="#D0D3D4">+7</font>
-                    <input asp-for="User.Phone" type="tel" class="form-control" id="Phone" maxlength="15" pattern="[(]{1}[0-9]{3}[)]{1}[ ]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}" onKeyup="phonenumber(this)" required />
+                    <input asp-for="User.Phone" type="tel" class="form-control" id="Phone" maxlength="15" pattern="[(]{1}[0-9]{3}[)]{1}[ ]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}" onKeyup="phonenumber(this)" />
+                    <span asp-validation-for="User.Phone" class="text-danger"></span>
                 </div>
             </div>
             <div class="col">
                 <label asp-for="User.Email" class="form-label">Email <font color="red">*</font></label>
-                <input asp-for="User.Email" type="email" class="form-control" id="inputEmail" required />
+                <input asp-for="User.Email" type="email" class="form-control" id="inputEmail" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="Password" class="form-label">Пароль <font color="red">*</font></label>
-                <input asp-for="Password" type="password" class="form-control" id="inputPassword" required />
+                <input asp-for="Password" type="password" class="form-control" id="inputPassword" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="ConfirmPassword" class="form-label">Подтвердите пароль <font color="red">*</font></label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control" id="inputPassword2" required />
+                <input asp-for="ConfirmPassword" type="password" class="form-control" id="inputPassword2" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-
         </div>
     </div>
     <div class="modal-footer">
         <div class="col">
-            <button type="submit" class="btn btn-primary">Войти в систему</button>
+            <button type="submit" class="btn btn-primary">Регистрация</button>
         </div>
     </div>
 </form>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

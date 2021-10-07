@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Models
 {
-    [Table("Login")]
-    public class Login
+    [Table("Registration")]
+    public class Registration
     {
-        [Key, Required]
-        public string UserName { get; set; }        
+        [Key]
+        public int Id { get; set; }
         public string Salt { get; set; }
         public string Hash { get; set; }
         public string Role { get; set; }
+        public int UserId { get; set; }
         public virtual User User { get; set; }
     }
 }

@@ -13,12 +13,18 @@ namespace Ecommerce.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите Имя")]
         public string Name { get; set; }
 
         public string Patronymic { get; set; }
+
+        [Required(ErrorMessage = "Введите Фамилию")]
         public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Введите Телефон")]
         public string Phone { get; set; }
+
+        [Required(ErrorMessage = "Введите Email")]
         public string Email { get; set; }
     }
 }

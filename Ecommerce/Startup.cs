@@ -42,10 +42,10 @@ namespace Ecommerce
                         /*var principal = context.Principal;
                         if(principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
                         {
-                            if (principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Admin")
+                            if (principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "admin")
                             {
                                 var claimsIdentity = principal.Identity as ClaimsIdentity;
-                                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+                                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
                             }
                         }*/
                         await Task.CompletedTask;

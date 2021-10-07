@@ -10,7 +10,7 @@ namespace Ecommerce.ViewModels
 {
     public class LoginViewModel
     {
-        public Login login { get; set; }
+        public Registration registration { get; set; }
 
         [Required]
         public string Password { get; set; }

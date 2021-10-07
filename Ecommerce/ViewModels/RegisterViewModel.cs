@@ -11,20 +11,16 @@ namespace Ecommerce.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
         public User User { get; set; }
 
-        [Required(ErrorMessage = "Password is required.")]
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Введите пароль")]
         public string Password { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        [Compare("Password")]
+        [Required(ErrorMessage = "Пароли не совпадают")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         [NotMapped]
         public string ConfirmPassword { get; set; }
 
-        [Required]
         public string ReturnUrl { get; set; }
 
         public bool IsPasswordValid(string password, string salt, string hash)

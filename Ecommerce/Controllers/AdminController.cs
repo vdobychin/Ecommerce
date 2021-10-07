@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
@@ -25,7 +26,7 @@ namespace Ecommerce.Controllers
             shopCart = _shopCart;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             return View();
@@ -46,8 +47,8 @@ namespace Ecommerce.Controllers
         [AllowAnonymous] //Сюда попадут не авторизованные пользователи
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            string salt = db.Logins.Where(x => x.UserName == loginViewModel.login.UserName).Select(x => x.Salt).FirstOrDefault();
-            string hash = db.Logins.Where(x => x.UserName == loginViewModel.login.UserName).Select(x => x.Hash).FirstOrDefault();
+            string salt = db.Registrations.Where(x => x.User.Name == loginViewModel.registration.User.Name).Select(x => x.Salt).FirstOrDefault();
+            string hash = db.Registrations.Where(x => x.User.Name == loginViewModel.registration.User.Name).Select(x => x.Hash).FirstOrDefault();
             if (String.IsNullOrEmpty(salt) && String.IsNullOrEmpty(hash))
             {
                 //return View(loginViewModel);
@@ -68,13 +69,13 @@ namespace Ecommerce.Controllers
 
             var claims = new List<Claim>
                 {
-                    new Claim("UserName", loginViewModel.login.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, loginViewModel.login.UserName)
+                    new Claim("UserName", loginViewModel.registration.User.Name),
+                    new Claim(ClaimTypes.NameIdentifier, loginViewModel.registration.User.Name)
                 };
 
-            if(db.Logins.First(x => x.Role == "Admin") != null)
+            if(db.Registrations.First(x => x.Role == "admin") != null)
             {
-                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                claims.Add(new Claim(ClaimTypes.Role, "admin"));
             }
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme)));
@@ -89,6 +90,7 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register(string ReturnUrl)
         {
             return PartialView();
@@ -96,17 +98,51 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public IActionResult Register(RegisterViewModel registerViewModel)//(string ReturnUrl, string Name, string Patronymic, string LastName, string Phone, string Email, string Password)
         {
-            User user = null;
-           /* user = new()
-            {
-                Name = Name,
-                Patronymic = Patronymic,
-                LastName = LastName,
-                Phone = Phone,
-                Email = Email
-            };*/
+            //Проверка, что такого пользователя нет
+            User userExists = new();
+            userExists = db.Users.First(x => x.Phone == registerViewModel.User.Phone || x.Email == registerViewModel.User.Email);
+            if (userExists is not null)
+            {                
+                return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>"); //Register("");// PartialView();
+            }
 
-            return Redirect(registerViewModel.ReturnUrl);
+            
+
+            User user = new()
+            {
+                Name = registerViewModel.User.Name,
+                Patronymic = registerViewModel.User.Patronymic,
+                LastName = registerViewModel.User.LastName,
+                Phone = registerViewModel.User.Phone,
+                Email = registerViewModel.User.Email
+            };
+
+            byte[] salt = new byte[128 / 8];
+            using (var rngCsp = new RNGCryptoServiceProvider())  //криптографический генератор случайных чисел
+            {
+                rngCsp.GetNonZeroBytes(salt);
+            }
+
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(    //алгоритм PBKDF2
+            password: registerViewModel.Password,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 256 / 8));
+
+            Registration registration = new()
+            {
+                Salt = Convert.ToBase64String(salt),
+                Hash = hashed,
+                Role = "user",
+                UserId = user.Id
+            };
+
+            db.Users.Add(user);
+            db.Registrations.Add(registration);
+            db.SaveChanges();
+
+            return Redirect("/Home/Index");
         }
     }
 }
