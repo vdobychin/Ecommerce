@@ -22,7 +22,6 @@ namespace Ecommerce.ViewModels
         public string ConfirmPassword { get; set; }
 
         public string ReturnUrl { get; set; }
-
         public bool IsPasswordValid(string password, string salt, string hash)
         {
             byte[] saltBytes = Convert.FromBase64String(salt);

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         private DatabaseContext db;
@@ -26,11 +26,11 @@ namespace Ecommerce.Controllers
             shopCart = _shopCart;
         }
 
-        [Authorize(Roles = "admin")]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //[Authorize(Roles = "admin")]
+       // public IActionResult Index()
+        //{
+        //    return View();
+        //}
         public IActionResult Denied()
         {
             return View();
@@ -38,38 +38,39 @@ namespace Ecommerce.Controllers
 
         [HttpGet]
         [AllowAnonymous] //Сюда попадут не авторизованные пользователи
-        public IActionResult Login(string ReturnUrl)
+        public IActionResult Login(string returnUrl)
         {
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous] //Сюда попадут не авторизованные пользователи
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel, string returnUrl = null)
         {
-            string salt = db.Registrations.Where(x => x.User.Name == loginViewModel.registration.User.Name).Select(x => x.Salt).FirstOrDefault();
-            string hash = db.Registrations.Where(x => x.User.Name == loginViewModel.registration.User.Name).Select(x => x.Hash).FirstOrDefault();
-            if (String.IsNullOrEmpty(salt) && String.IsNullOrEmpty(hash))
+            loginViewModel.ReturnUrl = returnUrl ?? Url.Content("~/");
+            string salt = db.Registrations.Where(x => x.User.Email == loginViewModel.registration.User.Email).Select(x => x.Salt).FirstOrDefault();
+            string hash = db.Registrations.Where(x => x.User.Email == loginViewModel.registration.User.Email).Select(x => x.Hash).FirstOrDefault();
+            if (String.IsNullOrEmpty(salt) || String.IsNullOrEmpty(hash))
             {
-                //return View(loginViewModel);
-                return BadRequest();
+                return View(loginViewModel);
+                //return BadRequest();
             }
 
             if (!ModelState.IsValid)
             {
-                //return View(loginViewModel);
-                return BadRequest();
+                return View(loginViewModel);
+                //return BadRequest();
             }
             
             if (!loginViewModel.IsPasswordValid(loginViewModel.Password, salt, hash))
             {
-                return BadRequest();
-                //return View(loginViewModel);
+                //return BadRequest();
+                return View(loginViewModel);
             }
 
             var claims = new List<Claim>
                 {
-                    new Claim("UserName", loginViewModel.registration.User.Name),
+                    new Claim("Name", loginViewModel.registration.User.Name),
                     new Claim(ClaimTypes.NameIdentifier, loginViewModel.registration.User.Name)
                 };
 
@@ -95,25 +96,27 @@ namespace Ecommerce.Controllers
         {
             return PartialView();
         }
+        
         [HttpPost]
         public IActionResult Register(RegisterViewModel registerViewModel)//(string ReturnUrl, string Name, string Patronymic, string LastName, string Phone, string Email, string Password)
         {
-            //Проверка, что такого пользователя нет
-            User userExists = new();
-            userExists = db.Users.First(x => x.Phone == registerViewModel.User.Phone || x.Email == registerViewModel.User.Email);
-            if (userExists is not null)
-            {                
-                return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>"); //Register("");// PartialView();
+            if (!ModelState.IsValid)
+            {
+                return NoContent();
             }
 
-            
+            string phone = new string(registerViewModel.User.Phone.Where(char.IsDigit).ToArray());
+            //Проверка, что такого пользователя нет            
+            if (db.Users.Where(x => x.Phone == phone || x.Email == registerViewModel.User.Email).Any())
+                return BadRequest();
 
+            
             User user = new()
             {
                 Name = registerViewModel.User.Name,
                 Patronymic = registerViewModel.User.Patronymic,
                 LastName = registerViewModel.User.LastName,
-                Phone = registerViewModel.User.Phone,
+                Phone = phone,
                 Email = registerViewModel.User.Email
             };
 
@@ -129,6 +132,9 @@ namespace Ecommerce.Controllers
             prf: KeyDerivationPrf.HMACSHA256,
             iterationCount: 100000,
             numBytesRequested: 256 / 8));
+            
+            db.Users.Add(user);
+            db.SaveChanges();
 
             Registration registration = new()
             {
@@ -137,11 +143,9 @@ namespace Ecommerce.Controllers
                 Role = "user",
                 UserId = user.Id
             };
-
-            db.Users.Add(user);
+                        
             db.Registrations.Add(registration);
             db.SaveChanges();
-
             return Redirect("/Home/Index");
         }
     }
