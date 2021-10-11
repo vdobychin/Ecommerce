@@ -94,10 +94,7 @@ namespace Ecommerce.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string ReturnUrl)
-        {
-            return PartialView();
-        }
+        public IActionResult Register(string ReturnUrl) => PartialView();
         
         [HttpPost]
         public IActionResult Register(RegisterViewModel registerViewModel)//(string ReturnUrl, string Name, string Patronymic, string LastName, string Phone, string Email, string Password)
@@ -154,6 +151,11 @@ namespace Ecommerce.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Requestcall()
+        {
+            return PartialView();
         }
     }
 }

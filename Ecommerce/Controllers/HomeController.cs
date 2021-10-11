@@ -33,10 +33,6 @@ namespace Ecommerce.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -55,6 +51,16 @@ namespace Ecommerce.Controllers
             ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
             ViewBag.TotalSum = shopCart.getTotalSumProductCart();
             return PartialView("~/Views/Shared/_ShowCart.cshtml");
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult RequestCall()
+        {
+            return PartialView();
         }
     }
 }

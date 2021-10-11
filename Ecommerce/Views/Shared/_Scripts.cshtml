@@ -9,6 +9,19 @@
 
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/all.js"></script>
+
+<script>
+    $(function () {
+        $('modal-requestcall').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var url = button.attr("href");
+            var modal = $(this);
+            modal.find('.modal-content').load(url);
+        });
+    });
+</script>
+
+
 @*
     <script>
         $(document).ready(function () {
@@ -81,6 +94,7 @@
         });
     });
 </script>
+
 
 @*
     <script>
