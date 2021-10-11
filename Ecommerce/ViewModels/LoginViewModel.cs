@@ -12,10 +12,12 @@ namespace Ecommerce.ViewModels
     {
         public Registration registration { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите пароль")]
         public string Password { get; set; }
         [Required]
         public string ReturnUrl { get; set; }
+
+        public string IsValidResponse { get; set; }
 
         public bool IsPasswordValid(string password, string salt, string hash)
         {

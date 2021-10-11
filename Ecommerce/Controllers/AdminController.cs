@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         private DatabaseContext db;
@@ -40,41 +40,43 @@ namespace Ecommerce.Controllers
         [AllowAnonymous] //Сюда попадут не авторизованные пользователи
         public IActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
             return View();
         }
 
+        
         [HttpPost]
         [AllowAnonymous] //Сюда попадут не авторизованные пользователи
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            loginViewModel.ReturnUrl = returnUrl ?? Url.Content("~/");
-            string salt = db.Registrations.Where(x => x.User.Email == loginViewModel.registration.User.Email).Select(x => x.Salt).FirstOrDefault();
-            string hash = db.Registrations.Where(x => x.User.Email == loginViewModel.registration.User.Email).Select(x => x.Hash).FirstOrDefault();
-            if (String.IsNullOrEmpty(salt) || String.IsNullOrEmpty(hash))
+            var regParam = db.Registrations.SingleOrDefault(x => x.User.Email == loginViewModel.registration.User.Email);            
+            if (String.IsNullOrEmpty(regParam.Salt) || String.IsNullOrEmpty(regParam.Hash))
             {
+                loginViewModel.IsValidResponse = "Такого пользователя не существует.";
                 return View(loginViewModel);
-                //return BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            /*if (!ModelState.IsValid)
             {
                 return View(loginViewModel);
-                //return BadRequest();
-            }
-            
-            if (!loginViewModel.IsPasswordValid(loginViewModel.Password, salt, hash))
+            }*/
+
+            if (!loginViewModel.IsPasswordValid(loginViewModel.Password, regParam.Salt, regParam.Hash))
             {
-                //return BadRequest();
+                loginViewModel.IsValidResponse = "Неверный логин или пароль.";
                 return View(loginViewModel);
             }
+
+            User user = db.Users.First(i => i.Email == loginViewModel.registration.User.Email);
 
             var claims = new List<Claim>
                 {
-                    new Claim("Name", loginViewModel.registration.User.Name),
-                    new Claim(ClaimTypes.NameIdentifier, loginViewModel.registration.User.Name)
+                //new Claim(ClaimTypes.Name "Name", user.Name),
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.NameIdentifier, user.Name)
                 };
 
-            if(db.Registrations.First(x => x.Role == "admin") != null)
+            if (regParam.Role == "admin")
             {
                 claims.Add(new Claim(ClaimTypes.Role, "admin"));
             }
@@ -147,6 +149,11 @@ namespace Ecommerce.Controllers
             db.Registrations.Add(registration);
             db.SaveChanges();
             return Redirect("/Home/Index");
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
     }
 }

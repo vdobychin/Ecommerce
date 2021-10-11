@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace Ecommerce.Controllers
             db = _db;
         }
 
+        [Authorize]
         public ViewResult Index()
         {
             ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
