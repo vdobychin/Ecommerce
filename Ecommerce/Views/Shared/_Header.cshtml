@@ -4,10 +4,13 @@
         </div>
     </div>
 </div>
-
-
 <div id="modal-requestcall" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content"></div>
+    </div>
+</div>
+<div id="modal-requestmail" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content"></div>
     </div>
 </div>
@@ -35,7 +38,7 @@
                         <span class="fw-bold" style="display: block; text-align: center;">8(888) 888-88-88</span>
                         <span class="mt-1" style="display: block; text-align: center;">
                             <small>
-                                <a asp-controller="Admin" asp-action="Requestcall" data-bs-target="#modal-requestcall" data-bs-toggle="modal" role="button">заказать звонок</a>
+                                <a asp-controller="Home" asp-action="Requestcall" data-bs-target="#modal-requestcall" data-bs-toggle="modal" role="button"  style="text-decoration:none; color:darkslateblue;">заказать звонок</a>
                             </small>
                         </span>
                     </p>
@@ -66,9 +69,6 @@
                                 <li>
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="Login"><i class="fas fa-user"></i>&nbsp&nbspВход</a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Home" asp-action="RequestCall" data-bs-target="#modal-requestcall" data-bs-toggle="modal" role="button">заказать звонок</a>
-                                </li>
                             </ul>
                         }
                     </div>
@@ -90,6 +90,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark navbar-brand" asp-area="" asp-controller="Home" asp-action="Contact">Контакты</a>
+                </li>
+                <li class="nav-item">                    
+                    <a class="nav-link text-dark navbar-brand" asp-area="" asp-controller="Home" asp-action="RequestMail" data-bs-target="#modal-register" data-bs-toggle="modal" role="button"><i class="fas fa-envelope-open-text"></i>Напишите нам</a>
                 </li>
             </ul>
         </nav>

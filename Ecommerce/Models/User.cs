@@ -21,10 +21,17 @@ namespace Ecommerce.Models
         [Required(ErrorMessage = "Введите Фамилию")]
         public string LastName { get; set; }
 
+        /*Для проверки на сервере в DB занят ли телефон, можно атрибутом Remote(action: "VerifyEmail", controller: "Users"), AdditionalFields = nameof(LastName))]
+         [Remote(action: "CheckEmail", controller: "Home", ErrorMessage ="Email уже используется")]*/
         [Required(ErrorMessage = "Введите Телефон")]
+        [StringLength(15, ErrorMessage = "Не более 15 цифр")]
         public string Phone { get; set; }
+
 
         [Required(ErrorMessage = "Введите Email")]
         public string Email { get; set; }
+
+        public DateTime CreateTime { get; set; }
+
     }
 }

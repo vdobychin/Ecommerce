@@ -1,6 +1,5 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
-using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -61,6 +60,53 @@ namespace Ecommerce.Controllers
         public IActionResult RequestCall()
         {
             return PartialView();
+        }
+        [HttpPost]
+        public IActionResult RequestCall(CallOrder callOrder, string ReturnUrl)
+        {
+            callOrder.CreateTime = DateTime.Now;
+            db.CallOrders.Add(callOrder);
+            db.SaveChanges();
+
+            if (String.IsNullOrEmpty(ReturnUrl))
+                return Redirect("/Home/Index");
+            else
+                return Redirect(ReturnUrl);
+        }
+
+        public IActionResult RequestMail()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public IActionResult RequestMail(Message message, string ReturnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                //ModelState.AddModelError("", "Имя и пароль не должны совпадать");
+                return PartialView();
+                //return NoContent();
+                //return BadRequest(ModelState);
+            }
+
+            if (String.IsNullOrEmpty(message.Email) || String.IsNullOrEmpty(message.Phone))
+                return NoContent();
+
+            if (!TryValidateModel(message))
+            {
+                return Json(false);
+            }
+
+            return View();
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult CheckMessage(string Email, string Phone)
+        {
+            if (String.IsNullOrEmpty(Email) || String.IsNullOrEmpty(Phone))
+                return NoContent();
+
+            return Json(false);
         }
     }
 }

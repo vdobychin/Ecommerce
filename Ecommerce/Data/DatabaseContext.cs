@@ -17,5 +17,6 @@ namespace Ecommerce.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<CallOrder> CallOrders { get; set; }
     }
 }

@@ -109,14 +109,15 @@ namespace Ecommerce.Controllers
             if (db.Users.Where(x => x.Phone == phone || x.Email == registerViewModel.User.Email).Any())
                 return BadRequest();
 
-            
+
             User user = new()
             {
                 Name = registerViewModel.User.Name,
                 Patronymic = registerViewModel.User.Patronymic,
                 LastName = registerViewModel.User.LastName,
                 Phone = phone,
-                Email = registerViewModel.User.Email
+                Email = registerViewModel.User.Email,
+                CreateTime = DateTime.Today
             };
 
             byte[] salt = new byte[128 / 8];
@@ -151,11 +152,6 @@ namespace Ecommerce.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        public IActionResult Requestcall()
-        {
-            return PartialView();
         }
     }
 }

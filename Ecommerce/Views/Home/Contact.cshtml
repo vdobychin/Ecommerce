@@ -31,18 +31,21 @@
     </div>
     <div class="col-2">
     </div>
-    <div class="col-5">
-        <div class="col">
+    <div class="col-5 p-3" style="border: 3px solid darkblue; border-radius:10px">
+        <div class="form-group">
             <label class="form-label">Введите Ваше имя:</label>
-            <input class="form-control" type="email" placeholder="E-mail" />
+            <input class="form-control" type="text" placeholder="Имя" />
         </div>
-        <div class="col">
+        <div class="form-group">
             <label class="form-label">Введите Ваш e-mail:</label>
             <input class="form-control" type="email" placeholder="E-mail" />
         </div>
-        <div class="col">
-            <label class="form-label">Напишите письмо:</label>
-            <input class="form-control" type="email" placeholder="E-mail" />
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Напишите письмо:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Текст письма"></textarea>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Отправить</button>
         </div>
     </div>
 </div>
