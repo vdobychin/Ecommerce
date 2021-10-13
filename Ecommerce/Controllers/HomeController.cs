@@ -59,7 +59,7 @@ namespace Ecommerce.Controllers
 
         public IActionResult RequestCall()
         {
-            return PartialView();
+            return PartialView("RequestCall");
         }
         [HttpPost]
         public IActionResult RequestCall(CallOrder callOrder, string ReturnUrl)
@@ -76,7 +76,7 @@ namespace Ecommerce.Controllers
 
         public IActionResult RequestMail()
         {
-            return PartialView();
+            return PartialView("RequestMail");
         }
         [HttpPost]
         public IActionResult RequestMail(Message message, string ReturnUrl)
@@ -107,6 +107,12 @@ namespace Ecommerce.Controllers
                 return NoContent();
 
             return Json(false);
+        }
+
+
+        public IActionResult RequestCall2()
+        {
+            return PartialView();
         }
     }
 }
