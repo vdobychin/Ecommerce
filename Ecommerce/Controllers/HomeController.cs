@@ -110,9 +110,17 @@ namespace Ecommerce.Controllers
         }
 
 
-        public IActionResult RequestCall2()
+        [HttpPost]
+        public IActionResult RequestCall2(CallOrder callOrder, string ReturnUrl)
         {
-            return PartialView();
+            callOrder.CreateTime = DateTime.Now;
+            db.CallOrders.Add(callOrder);
+            db.SaveChanges();
+
+            if (String.IsNullOrEmpty(ReturnUrl))
+                return Redirect("/Home/Index");
+            else
+                return Redirect(ReturnUrl);
         }
     }
 }

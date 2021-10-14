@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Ecommerce.ViewModels
 {
-    public class ReelViewModel
+    public class ReelViewModel : FeedbackViewModel
     {
         public DatabaseContext db;
         public int subCatalogId { get; set; }

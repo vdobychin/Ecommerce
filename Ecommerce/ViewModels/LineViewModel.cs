@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.ViewModels
 {
-    public class LineViewModel
+    public class LineViewModel : FeedbackViewModel
     {
         public DatabaseContext db;
         public int subCatalogId { get; set; }

@@ -1,0 +1,51 @@
+﻿@model FeedbackViewModel
+
+
+<form data-ajax="true" data-ajax-method="post" asp-route-ReturnUrl="@Context.Request.Headers["Referer"].ToString()" asp-controller="Home" asp-action="RequestCall2">
+    <a class="nav-link text-dark navbar-brand" data-bs-toggle="modal" data-bs-target="#requestcall2" role="button"><i class="fas fa-mobile-alt"></i>&nbspЗаказать звонок</a>
+
+    <div class="modal fade" id="requestcall2" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-mobile-alt"></i>&nbsp&nbspЗаказать звонок</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="col">
+                            <div class="col">
+                                <label asp-for="CallOrder.Name" class="form-label"></label>
+                                <input asp-for="CallOrder.Name" class="form-control" id="inputCallOrderName2" />
+                                <span asp-validation-for="CallOrder.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col">
+                                <label asp-for="CallOrder.Phone" class="form-label"></label>
+                                <input asp-for="CallOrder.Phone" class="form-control" id="inputCallOrderPhone2" />
+                                <span asp-validation-for="CallOrder.Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Передумал</button>
+                    <input type="submit" value="Заказать" class="btn btn-success btn-sm" method="post" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+<script>
+    $(function () {
+        $('#requestcall2').on('submit', function (event) {
+            alert("Мы свяжемся с Вами в ближайшее время");
+        });
+    });
+</script>
+
