@@ -11,7 +11,7 @@ namespace Ecommerce.ViewModels
     {
         public DatabaseContext db;
         public int subCatalogId { get; set; }
-        public List<SelectListItem> sortName { get; set; } = Sort.sortName;
+        public List<SelectListItem> sortName { get; set; } = Constants.sortName;
         public int selectedValue { get; set; }
 
         //Diameter
@@ -127,16 +127,16 @@ namespace Ecommerce.ViewModels
             //sort
             switch (selectedValue)
             {
-                case (int)Sort.OrderBy.priceAsc:
+                case (int)Constants.OrderBy.priceAsc:
                     reels = reels.OrderBy(x => x.Product.Price);
                     break;
-                case (int)Sort.OrderBy.priceDesc:
+                case (int)Constants.OrderBy.priceDesc:
                     reels = reels.OrderByDescending(x => x.Product.Price);
                     break;
-                case (int)Sort.OrderBy.quantity:
+                case (int)Constants.OrderBy.quantity:
                     reels = reels.OrderByDescending(x => x.Product.Quantity);
                     break;
-                case (int)Sort.OrderBy.name:
+                case (int)Constants.OrderBy.name:
                     reels = reels.OrderBy(x => x.Product.Name);
                     break;
                 default:

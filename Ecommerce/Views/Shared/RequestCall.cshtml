@@ -1,10 +1,7 @@
 ﻿@model FeedbackViewModel
 
-
-<form data-ajax="true" data-ajax-method="post" asp-route-ReturnUrl="@Context.Request.Headers["Referer"].ToString()" asp-controller="Home" asp-action="RequestCall2">
-    <a class="nav-link text-dark navbar-brand" data-bs-toggle="modal" data-bs-target="#requestcall2" role="button"><i class="fas fa-mobile-alt"></i>&nbspЗаказать звонок</a>
-
-    <div class="modal fade" id="requestcall2" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+<form id="requestcallform" method="post" asp-route-ReturnUrl="@Context.Request.Headers["Referer"].ToString()" asp-controller="Home" asp-action="RequestCall" >    
+    <div id="requestcall" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -16,12 +13,15 @@
                         <div class="col">
                             <div class="col">
                                 <label asp-for="CallOrder.Name" class="form-label"></label>
-                                <input asp-for="CallOrder.Name" class="form-control" id="inputCallOrderName2" />
+                                <input asp-for="CallOrder.Name" class="form-control" id="inputCallOrderName" placeholder="Имя" />
                                 <span asp-validation-for="CallOrder.Name" class="text-danger"></span>
                             </div>
                             <div class="col">
                                 <label asp-for="CallOrder.Phone" class="form-label"></label>
-                                <input asp-for="CallOrder.Phone" class="form-control" id="inputCallOrderPhone2" />
+                                <div class="input-group">
+                                    <font class="input-group-text" color="#D0D3D4">+7</font>
+                                    <input asp-for="CallOrder.Phone" class="form-control" id="inputCallOrderPhone" placeholder="Телефон" maxlength="15" onKeyup = "phonenumber(this)"/>
+                                </div>
                                 <span asp-validation-for="CallOrder.Phone" class="text-danger"></span>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Передумал</button>
-                    <input type="submit" value="Заказать" class="btn btn-success btn-sm" method="post" />
+                    <input type="submit" value="Заказать" class="btn btn-success btn-sm" method="post"/>
                 </div>
             </div>
         </div>
@@ -42,10 +42,10 @@
 
 
 <script>
-    $(function () {
-        $('#requestcall2').on('submit', function (event) {
+    $("#requestcallform").submit(function (e) {
+        if ($(this).valid()) {
             alert("Мы свяжемся с Вами в ближайшее время");
-        });
+        }
     });
 </script>
 

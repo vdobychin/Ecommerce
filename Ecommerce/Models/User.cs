@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,16 +22,17 @@ namespace Ecommerce.Models
         [Required(ErrorMessage = "Введите Фамилию")]
         public string LastName { get; set; }
 
-        /*Для проверки на сервере в DB занят ли телефон, можно атрибутом Remote(action: "VerifyEmail", controller: "Users"), AdditionalFields = nameof(LastName))]
-         [Remote(action: "CheckEmail", controller: "Home", ErrorMessage ="Email уже используется")]*/
+        [Remote(action: "CheckRegister", controller: "Admin", ErrorMessage ="Такой телефон уже используется")]
         [Required(ErrorMessage = "Введите Телефон")]
         [StringLength(15, ErrorMessage = "Не более 15 цифр")]
         public string Phone { get; set; }
 
-
+        [Remote(action: "CheckRegister", controller: "Admin", ErrorMessage = "Такой Email уже используется")]
         [Required(ErrorMessage = "Введите Email")]
+        [EmailAddress(ErrorMessage = "Некоректный электронный адрес")]
         public string Email { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime CreateTime { get; set; }
 
     }

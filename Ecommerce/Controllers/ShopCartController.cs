@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
+using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Hosting.Internal;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Ecommerce.Controllers
 {
@@ -40,7 +42,9 @@ namespace Ecommerce.Controllers
                 //shopCart = _shopCart
                 listShopItems = items
             };*/
-            return View(shopCart.listShopItems);
+            FeedbackViewModel feedbackViewModel = new() { ShopCartItems = shopCart.listShopItems };
+            //return View(shopCart.listShopItems);
+            return View(feedbackViewModel);
         }
 
         public RedirectToActionResult UpdateCard(/*int id, int quantity*/)
@@ -79,31 +83,35 @@ namespace Ecommerce.Controllers
             return PartialView();
         }
 
-        public ActionResult OrderOk(string Name, string Patronymic, string LastName, string Phone, string Email)
-        {
-            var shopCartItems = db.ShopCartItems.Where(x => x.ShopCartId == shopCart.ShopCardId).Include(x => x.Product).ToList();
-            Order order = null;
-            if (shopCartItems.Count() != 0)
-            {
-                order = new()
-                {
-                    ShopCartId = shopCart.ShopCardId,
-                    //Name = Name,
-                    //Patronymic = Patronymic,
-                    //LastName = LastName,
-                    //Phone = Phone,
-                    //Email = Email,
-                    TotalSum = shopCart.getTotalSumProductCart()
-                };
-                db.Orders.Add(order);
-                db.SaveChanges();
 
-                ShopCart.NewSession();
-            }
+        [Authorize]
+        public ActionResult OrderOk(string deliveryRadioDefault, string City, string AddressDelivery, string paymentRadioDefault)
+        {
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+
+            var shopCartItems = db.ShopCartItems.Where(x => x.ShopCartId == shopCart.ShopCardId).Include(x => x.Product).ToList();
+            FeedbackViewModel feedbackViewModel = new();
+            feedbackViewModel.Order = new()
+            {
+                ShopCartId = shopCart.ShopCardId,
+                Delivery = deliveryRadioDefault,
+                City = (deliveryRadioDefault == "Доставка" ? City : null),
+                AddressDelivery = (deliveryRadioDefault == "Доставка" ? AddressDelivery : null),
+                Payment = paymentRadioDefault,
+                TotalSum = shopCart.getTotalSumProductCart(),
+                CreateTime = DateTime.Today,
+                User = db.Users.First(x => x.Email == User.FindFirstValue(ClaimTypes.Email))
+            };
+            db.Orders.Add(feedbackViewModel.Order);
+            db.SaveChanges();
+            ShopCart.NewSession();
+            
             ViewBag.ShopCartItem = shopCartItems;
             //Email email = new();
             //email.Send(Email);
-            return View(order);
+            
+            return View(feedbackViewModel);
         }
     }
 }

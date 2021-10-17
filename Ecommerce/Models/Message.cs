@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Ecommerce.Models
 {
     [Table("Message")]
-    public class Message : IValidatableObject
+    public class Message //: IValidatableObject
     {
         [Key]
         public int Id { get; set; }
@@ -19,24 +19,22 @@ namespace Ecommerce.Models
         [Required(ErrorMessage = "Напишите Ваше имя")]
         public string Name { get; set; }
 
-        //[Required(ErrorMessage = "Для обратной связи нужен или телефон или email")]
-        //[Remote(action: "CheckMessage", controller: "Home", AdditionalFields = nameof(Email))]
-        [Display(Name = "Телефон")]
-        //[Required(ErrorMessage = "Отсутствует телефон")]
-        public string Phone { get; set; }
 
-        [Remote(action: "CheckMessage", controller: "Home", AdditionalFields = nameof(Phone))]
+        //[Remote(action: "CheckMessage", controller: "Home", AdditionalFields = nameof(Phone))]
         [Display(Name = "Email")]
-        //[EmailAddress(ErrorMessage = "Некоректная электронная почта")]
-        //[Required(ErrorMessage = "Отсутствует почта")]
+        [EmailAddress(ErrorMessage = "Некоректная электронная почта")]
+        [Required(ErrorMessage = "Электронная почта")]
         public string Email { get; set; }
+        
 
         [DataType(DataType.Date)]
         public DateTime CreateTime { get; set; }
 
+
         [Required(ErrorMessage = "Отсутствует текст сообщения")]
         public string Text { get; set; }
 
+        /*
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Phone == null && Email == null)
@@ -45,5 +43,6 @@ namespace Ecommerce.Models
                 yield return new ValidationResult("Classic movies must have a release year no later than ");
             }
         }
+        */
     }
 }

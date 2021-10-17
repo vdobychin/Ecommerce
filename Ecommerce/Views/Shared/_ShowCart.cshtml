@@ -1,10 +1,14 @@
 ﻿<div>
     <form asp-action="UpdateShopingCart" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ShopingCart">
         <div>
-            <a asp-controller="ShopCart" asp-action="Index" >
+            <a asp-controller="ShopCart" asp-action="Index" class="position-relative">
                 <img src="~/images/shopping-cart.png" width="30" data-bs-toggle="tooltip" title="Перейти в корзину"/>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                    @ViewBag.TotalQuantity
+                    <span class="visually-hidden">количество товаров</span>
+                </span>
             </a>
-            <p>
+            @*
                 @if (@ViewBag.TotalQuantity == null)
                 {
                     <span>Товаров:&nbsp;&nbsp;0 шт.<br /></span>
@@ -12,16 +16,17 @@
                 else
                 {
                     <span>Товаров:&nbsp;&nbsp;@ViewBag.TotalQuantity шт.<br /></span>
-                }
+                }*@
+
                 @if (@ViewBag.TotalSum == null)
                 {
-                    <span>На сумму: 0 ₽<br /></span>
+                    <span>&nbsp&nbsp 0 ₽<br /></span>
                 }
                 else
                 {
-                    <span>На сумму: @ViewBag.TotalSum ₽<br /></span>
+                    <span>&nbsp&nbsp @ViewBag.TotalSum ₽<br /></span>
                 }
-            </p>
+            
             @*На сумму: @Model.getTotalSumProductCart().ToString("C", new System.Globalization.CultureInfo("ru-RU"))
         На сумму: @ViewBag.TotalSum*@
         </div>

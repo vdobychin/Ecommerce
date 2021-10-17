@@ -8,14 +8,19 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.ViewModels
 {
-    public class LoginViewModel
+    public class LoginViewModel : FeedbackViewModel
     {
-        public Registration registration { get; set; }
+        //public Registration registration { get; set; }
 
         [Required(ErrorMessage = "Введите пароль")]
         public string Password { get; set; }
+
         [Required]
         public string ReturnUrl { get; set; }
+
+        [Required(ErrorMessage = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
 
         public string IsValidResponse { get; set; }
 

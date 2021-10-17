@@ -1,6 +1,6 @@
-﻿@model Order
+﻿@model FeedbackViewModel
 
-@if (Model == null)
+@if (Model.Order == null)
 {
     <p>Заказ уже оформлен. На Ваш электронный адрес, отправлено письмо с деталями заказа.</p>
 }
@@ -16,7 +16,7 @@ else
         </div>
 
         <div class="row" style="display:inline-block">
-            <span>№</span><font size="4" color="darkblue"><b><u>@Model.Id</u></b></font>
+            <span>№</span><font size="4" color="darkblue"><b><u>@Model.Order.Id</u></b></font>
         </div>
 
         <br />
@@ -35,7 +35,7 @@ else
 
             <tr>
                 <td colspan="2">
-                    Самовывоз
+                    @Model.Order.Delivery
                 </td>
             </tr>
 
@@ -52,14 +52,14 @@ else
 
             <tr>
                 <td colspan="2">
-                    @Model.User.Name @Model.User.LastName<br />+7 @Model.User.Phone
+                    @Model.Order.User.Name @Model.Order.User.LastName<br />+7 @Model.Order.User.Phone
                 </td>
             </tr>
         </table>
         <br />
         <br />
         <div class="row">
-            <p>Уважаемый @Model.User.Name, спасибо за Ваш заказ! Номер и детали заказа отправлены Вам на электронную почту: @Model.User.Email</p>
+            <p>Уважаемый @Model.Order.User.Name, спасибо за Ваш заказ! Номер и детали заказа отправлены Вам на электронную почту: @Model.Order.User.Email</p>
             <p>Мы свяжемся с Вами в ближайшее время</p>
         </div>
 

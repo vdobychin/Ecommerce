@@ -33,7 +33,7 @@ namespace Ecommerce
             services.AddAuthentication(CookieScheme).AddCookie(CookieScheme, options => {
                 options.LoginPath = "/Admin/Login";
                 options.AccessDeniedPath = "/Admin/Denied";  //если закрыт доступ к странице то переход в Admin/denied
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(500);
                 options.Events = new CookieAuthenticationEvents()
                 {
                     OnSigningIn = async context =>

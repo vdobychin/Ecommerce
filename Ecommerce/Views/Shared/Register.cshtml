@@ -1,0 +1,186 @@
+﻿@model FeedbackViewModel
+@*<form data-ajax="true" data-ajax-method="post">*@
+<form method="post" asp-controller="Admin" asp-action="Register" asp-route-ReturnUrl="@Context.Request.Headers["Referer"].ToString()">
+    <div id="modalregister" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" id="registercontent">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i>&nbsp&nbspРегистрация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="col">
+                            <label asp-for="RegisterViewModel.User.Name" class="form-label">Имя <font color="red">*</font></label>
+                            <input asp-for="RegisterViewModel.User.Name" type="text" class="form-control" id="inputName" placeholder="Имя" />
+                            <span asp-validation-for="RegisterViewModel.User.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <label asp-for="RegisterViewModel.User.Patronymic" class="form-label">Отчество</label>
+                            <input asp-for="RegisterViewModel.User.Patronymic" type="text" class="form-control" id="inputPatronymic" placeholder="Отчество" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="RegisterViewModel.User.LastName" class="form-label">Фамилия <font color="red">*</font></label>
+                            <input asp-for="RegisterViewModel.User.LastName" type="text" class="form-control" id="inputLastName" placeholder="Фамилия" />
+                            <span asp-validation-for="RegisterViewModel.User.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <label asp-for="RegisterViewModel.User.Phone" class="form-label">Телефон <font color="red">*</font></label>
+                            <div class="input-group">
+                                <font class="input-group-text" color="#D0D3D4">+7</font>
+                                <input asp-for="RegisterViewModel.User.Phone" type="tel" class="form-control" id="inputPhone" maxlength="15" pattern="[(]{1}[0-9]{3}[)]{1}[ ]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}" onKeyup="phonenumber(this)" placeholder="Телефон" />
+                            </div>
+                            <span asp-validation-for="RegisterViewModel.User.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <label asp-for="RegisterViewModel.User.Email" class="form-label">Email <font color="red">*</font></label>
+                            <input asp-for="RegisterViewModel.User.Email" type="email" class="form-control" id="inputEmail" placeholder="Электронная почта" />
+                            <span asp-validation-for="RegisterViewModel.User.Email" class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <label asp-for="RegisterViewModel.Password" class="form-label">Пароль <font color="red">*</font></label>
+                            <input asp-for="RegisterViewModel.Password" type="password" class="form-control" id="inputPassword" placeholder="Пароль" />
+                            <span asp-validation-for="RegisterViewModel.Password" class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <label asp-for="RegisterViewModel.ConfirmPassword" class="form-label">Подтвердите пароль <font color="red">*</font></label>
+                            <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" id="inputPassword2" placeholder="Подтвердите пароль" />
+                            <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="submitRegister" method="post">Регистрация</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+@*
+    <script>
+    $('#submitRegister').click(function () {
+        var url = '@Url.Action("Register", "Admin")';
+        var User = {
+            Name: $('#@Html.IdFor(m=>m.RegisterViewModel.User.Name)').val(),
+            Patronymic: $('#@Html.IdFor(m=>m.RegisterViewModel.User.Patronymic)').val(),
+            LastName: $('#@Html.IdFor(m=>m.RegisterViewModel.User.LastName)').val(),
+            Phone: $('#@Html.IdFor(m=>m.RegisterViewModel.User.Phone)').val(),
+            Email: $('#@Html.IdFor(m=>m.RegisterViewModel.User.Email)').val()
+        }
+
+        var registerViewModel = {
+            "User": User,
+            "Password": $('#@Html.IdFor(m=>m.RegisterViewModel.Password)').val(),
+            "ConfirmPassword": $('#@Html.IdFor(m=>m.RegisterViewModel.ConfirmPassword)').val()
+        }
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: registerViewModel,
+            //datatype: "json",
+            //cache: false,
+            //data: { "data": $("input[name='data']").val() },
+            statusCode: {
+                400: function () {
+                    alert("Пользователь с таким телефоном или Emali уже зарегистрирован!");
+                },
+                204: function () {  //NoContent()
+                    //alert("Заполните все поля");
+                },
+                200: function () {
+                    $('.modal').remove();
+                    $('.modal-backdrop').remove();
+
+                    //$("#myModal").removeClass('fade').modal('hide');
+                    //$("#myModal").modal("dispose");
+                }
+            }
+
+
+            //error: function () {
+            //    $("#Text1").val("");
+                //   alert("Пользователь с таким телефоном или Emali уже зврегистрирован!");
+
+            //},
+            //dataFilter: function() {    //NoContent()
+                //$("#Text1").val("");
+                //alert("Заполните все поля");
+            //},
+            //success: function () {
+            //    $("#Text1").val("");
+                //   alert("pass successfully!");
+
+            //}
+        });
+    });
+    </script>
+*@
+
+
+
+
+
+@*
+    <form class="row g-3 p-1" asp-controller="Admin" asp-action="Register" method="post">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i>&nbsp&nbspРегистрация</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="col">
+                    @Html.LabelFor(model => model.RegisterViewModel.User.Name, "Имя", htmlAttributes: new { @class = "form-label" })<font color="red">&nbsp*</font>
+                    @Html.EditorFor(model => model.RegisterViewModel.User.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Имя" } })
+                    @Html.ValidationMessageFor(model => model.RegisterViewModel.User.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.RegisterViewModel.User.Patronymic, "Отчество", htmlAttributes: new { @class = "form-label" })
+                    @Html.EditorFor(model => model.RegisterViewModel.User.Patronymic, new { htmlAttributes = new { @class = "form-control", @placeholder = "Отчество" } })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.RegisterViewModel.User.LastName, "Фамилия", htmlAttributes: new { @class = "form-label" })<font color="red">&nbsp*</font>
+                    @Html.EditorFor(model => model.RegisterViewModel.User.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Фамилия" } })
+                    @Html.ValidationMessageFor(model => model.RegisterViewModel.User.LastName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.RegisterViewModel.User.Phone, "Телефон", htmlAttributes: new { @class = "form-label" })<font color="red">&nbsp*</font>
+                    <div class="input-group">
+                        <font class="input-group-text" color="#D0D3D4">+7</font>
+                        @Html.EditorFor(model => model.RegisterViewModel.User.Phone, new { htmlAttributes = new { @class = "form-control", @pattern = "[(]{1}[0-9]{3}[)]{1}[ ]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}", @onKeyup = "phonenumber(this)", @placeholder = "Телефон" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.RegisterViewModel.User.Phone, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.RegisterViewModel.User.Email, "Email", htmlAttributes: new { @class = "form-label" })<font color="red">&nbsp*</font>
+                    @Html.EditorFor(model => model.RegisterViewModel.User.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Электронная почта" } })
+                    @Html.ValidationMessageFor(model => model.RegisterViewModel.User.Email, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.RegisterViewModel.Password, "Пароль", htmlAttributes: new { @class = "form-label" })<font color="red">&nbsp*</font>
+                    @Html.EditorFor(model => model.RegisterViewModel.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Пароль" } })
+                    @Html.ValidationMessageFor(model => model.RegisterViewModel.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.RegisterViewModel.ConfirmPassword, "Подтвердите пароль", htmlAttributes: new { @class = "form-label" })<font color="red">&nbsp*</font>
+                    @Html.EditorFor(model => model.RegisterViewModel.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Подтвердите пароль" } })
+                    @Html.ValidationMessageFor(model => model.RegisterViewModel.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col">
+                <button type="submit" class="btn btn-primary" >Регистрация</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+*@

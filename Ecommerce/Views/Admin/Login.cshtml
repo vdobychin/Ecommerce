@@ -1,42 +1,34 @@
 ﻿@model LoginViewModel
-@{
-    ViewData["Title"] = "Login";
-}
+@{ ViewData["Title"] = "Login"; }
 
 <h1>Login</h1>
 
-<div id="modal-register" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
-
-<form asp-controller="Admin" asp-action="Login" method="post" >
+<form asp-controller="Admin" asp-action="Login" method="post" asp-route-ReturnUrl="@Context.Request.Headers["Referer"].ToString()">
     <div class="col-4">
         <div class="col">
-            <label asp-for="registration.User.Email" class="form-label">Логин</label>
-            <input asp-for="registration.User.Email" class="form-control" type="email" placeholder="E-mail" />
-            <span asp-validation-for="registration.User.Email"></span>
+            <label asp-for="Email" class="form-label">Логин</label>
+            <input asp-for="Email" class="form-control" type="email" placeholder="E-mail" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="col">
             <label asp-for="Password" class="form-label">Пароль</label>
             <input type="password" class="form-control" asp-for="Password" />
-            <span asp-validation-for="Password"></span>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        @if(Model != null && !String.IsNullOrEmpty(Model.IsValidResponse))
-            {
-                <span class = "text-danger">@Model.IsValidResponse</span>
-            }
-          
+        @if (Model != null && !String.IsNullOrEmpty(Model.IsValidResponse))
+        {
+            <span class="text-danger">@Model.IsValidResponse</span>
+        }
+
         <div class="row p-3">
-            <div class="col-12">
-                <button class="btn btn-success" type="submit" asp-route-ReturnUrl="@Context.Request.Headers["Referer"].ToString()">Войти</button>                
+            <div class="col-6">
+                <button class="btn btn-success" type="submit">Войти</button>
+            </div>
+            <div class="col-6">
+                <a role="button" data-bs-toggle="modal" data-bs-target="#modalregister">Регистрация</a>
             </div>
         </div>
     </div>
 </form>
-
-<a asp-controller="Admin" asp-action="Register" data-bs-target="#modal-register" data-bs-toggle="modal" role="button">Регистрация</a>
 
 

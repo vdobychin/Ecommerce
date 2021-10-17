@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,20 +38,25 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous] //Сюда попадут не авторизованные пользователи
-        public IActionResult Login(string returnUrl)
+        //[AllowAnonymous] //Сюда попадут не авторизованные пользователи
+        public IActionResult Login()
         {
-            ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+
             return View();
         }
 
         
         [HttpPost]
-        [AllowAnonymous] //Сюда попадут не авторизованные пользователи
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        //[AllowAnonymous] //Сюда попадут не авторизованные пользователи
+        public IActionResult Login(LoginViewModel loginViewModel)
         {
-            var regParam = db.Registrations.SingleOrDefault(x => x.User.Email == loginViewModel.registration.User.Email);            
-            if (String.IsNullOrEmpty(regParam.Salt) || String.IsNullOrEmpty(regParam.Hash))
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
+
+            var regParam = db.Credentials.Include(x => x.User).FirstOrDefault(x => x.User.Email == loginViewModel.Email);            
+            if (regParam is null)
             {
                 loginViewModel.IsValidResponse = "Такого пользователя не существует.";
                 return View(loginViewModel);
@@ -63,18 +69,25 @@ namespace Ecommerce.Controllers
 
             if (!loginViewModel.IsPasswordValid(loginViewModel.Password, regParam.Salt, regParam.Hash))
             {
-                loginViewModel.IsValidResponse = "Неверный логин или пароль.";
+                loginViewModel.IsValidResponse = "Неверный логин.";
                 return View(loginViewModel);
             }
 
-            User user = db.Users.First(i => i.Email == loginViewModel.registration.User.Email);
+            AddClaim(regParam.User);
+
+            return Redirect(loginViewModel.ReturnUrl);
+        }
+
+        async void AddClaim(User user)
+        {
+            var regParam = db.Credentials.SingleOrDefault(x => x.User.Email == user.Email);
 
             var claims = new List<Claim>
-                {
-                //new Claim(ClaimTypes.Name "Name", user.Name),
-                    new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.NameIdentifier, user.Name)
-                };
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.NameIdentifier, user.Name)
+            };
 
             if (regParam.Role == "admin")
             {
@@ -83,7 +96,6 @@ namespace Ecommerce.Controllers
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme)));
             //await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookie")));
-            return Redirect(loginViewModel.ReturnUrl);
         }
 
         public IActionResult LogOff()
@@ -92,9 +104,6 @@ namespace Ecommerce.Controllers
             return Redirect("/Home/Index");
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Register(string ReturnUrl) => PartialView();
         
         [HttpPost]
         public IActionResult Register(RegisterViewModel registerViewModel)//(string ReturnUrl, string Name, string Patronymic, string LastName, string Phone, string Email, string Password)
@@ -106,8 +115,8 @@ namespace Ecommerce.Controllers
 
             string phone = new string(registerViewModel.User.Phone.Where(char.IsDigit).ToArray());
             //Проверка, что такого пользователя нет            
-            if (db.Users.Where(x => x.Phone == phone || x.Email == registerViewModel.User.Email).Any())
-                return BadRequest();
+            //if (db.Users.Where(x => x.Phone == phone || x.Email == registerViewModel.User.Email).Any())
+            //    return BadRequest();
 
 
             User user = new()
@@ -136,7 +145,7 @@ namespace Ecommerce.Controllers
             db.Users.Add(user);
             db.SaveChanges();
 
-            Registration registration = new()
+            Credential credential = new()
             {
                 Salt = Convert.ToBase64String(salt),
                 Hash = hashed,
@@ -144,13 +153,28 @@ namespace Ecommerce.Controllers
                 UserId = user.Id
             };
                         
-            db.Registrations.Add(registration);
+            db.Credentials.Add(credential);
             db.SaveChanges();
+            AddClaim(user);
+
             return Redirect("/Home/Index");
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult CheckRegister(FeedbackViewModel feedbackViewModel)
+        {
+            if (feedbackViewModel.RegisterViewModel.User.Phone is not null)
+                feedbackViewModel.RegisterViewModel.User.Phone = new string(feedbackViewModel.RegisterViewModel.User.Phone.Where(char.IsDigit).ToArray());
+
+            if (db.Users.Where(x => x.Phone == feedbackViewModel.RegisterViewModel.User.Phone || x.Email == feedbackViewModel.RegisterViewModel.User.Email).Any())
+                return Json(false);
+            return Json(true);
         }
 
         public IActionResult Privacy()
         {
+            ViewBag.TotalQuantity = shopCart.getTotalQuantityProductCart();
+            ViewBag.TotalSum = shopCart.getTotalSumProductCart();
             return View();
         }
     }

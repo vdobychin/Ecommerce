@@ -1,11 +1,14 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
+using Ecommerce.ViewModels;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Ecommerce.Controllers
 {
@@ -57,49 +60,26 @@ namespace Ecommerce.Controllers
             return View();
         }
 
-        public IActionResult RequestCall()
-        {
-            return PartialView("RequestCall");
-        }
+       
         [HttpPost]
-        public IActionResult RequestCall(CallOrder callOrder, string ReturnUrl)
+        public IActionResult RequestMail(Message message, string ReturnUrl)
         {
-            callOrder.CreateTime = DateTime.Now;
-            db.CallOrders.Add(callOrder);
+            message.CreateTime = DateTime.Now;
+            db.Messages.Add(message);
             db.SaveChanges();
-
+            /*
+            if (!TryValidateModel(message))
+            {
+                return Json(false);
+            }
+            */
             if (String.IsNullOrEmpty(ReturnUrl))
                 return Redirect("/Home/Index");
             else
                 return Redirect(ReturnUrl);
         }
 
-        public IActionResult RequestMail()
-        {
-            return PartialView("RequestMail");
-        }
-        [HttpPost]
-        public IActionResult RequestMail(Message message, string ReturnUrl)
-        {
-            if (!ModelState.IsValid)
-            {
-                //ModelState.AddModelError("", "Имя и пароль не должны совпадать");
-                return PartialView();
-                //return NoContent();
-                //return BadRequest(ModelState);
-            }
-
-            if (String.IsNullOrEmpty(message.Email) || String.IsNullOrEmpty(message.Phone))
-                return NoContent();
-
-            if (!TryValidateModel(message))
-            {
-                return Json(false);
-            }
-
-            return View();
-        }
-
+        /*
         [AcceptVerbs("GET", "POST")]
         public IActionResult CheckMessage(string Email, string Phone)
         {
@@ -108,12 +88,14 @@ namespace Ecommerce.Controllers
 
             return Json(false);
         }
-
+        */
 
         [HttpPost]
-        public IActionResult RequestCall2(CallOrder callOrder, string ReturnUrl)
+        public IActionResult RequestCall(CallOrder callOrder, string ReturnUrl)
         {
+            string phone = new string(callOrder.Phone.Where(char.IsDigit).ToArray());
             callOrder.CreateTime = DateTime.Now;
+            callOrder.Phone = phone;
             db.CallOrders.Add(callOrder);
             db.SaveChanges();
 
@@ -122,5 +104,6 @@ namespace Ecommerce.Controllers
             else
                 return Redirect(ReturnUrl);
         }
+
     }
 }

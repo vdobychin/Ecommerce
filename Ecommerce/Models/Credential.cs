@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Models
 {
-    [Table("Registration")]
-    public class Registration
+    [Table("Credential")]
+    public class Credential
     {
         [Key]
         public int Id { get; set; }

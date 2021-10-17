@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Models
 {
-    public class Sort
+    public class Constants
     {
         public enum OrderBy { priceAsc = 0, priceDesc = 1, quantity = 2, name = 3 };
 

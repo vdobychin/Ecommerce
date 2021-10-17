@@ -1,21 +1,21 @@
-﻿
-<div id="modal-register" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content" id="registercontent">
+﻿@*
+    <div id="modal-register" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content" id="registercontent">
+            </div>
         </div>
     </div>
-</div>
-<div id="modal-requestcall" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content" id="requestcallcontent"></div>
+    <div id="modal-requestcall" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content" id="requestcallcontent"></div>
+        </div>
     </div>
-</div>
-<div id="modal-requestmail" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content" id="requestmailcontent"></div>
+    <div id="modal-requestmail" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content" id="requestmailcontent"></div>
+        </div>
     </div>
-</div>
-
+*@
 
 @*<header class="fixed-top">*@
 <header>
@@ -34,14 +34,13 @@
 
             </div>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-
                 <div class="mx-3">
                     <p class="fs-6 lh-sm">
                         Бесплатная консультация:<br />
                         <span class="fw-bold" style="display: block; text-align: center;">8(888) 888-88-88</span>
                         <span class="mt-1" style="display: block; text-align: center;">
                             <small>
-                                <a asp-controller="Home" asp-action="RequestCall" data-bs-target="#modal-requestcall" data-bs-toggle="modal" role="button" style="text-decoration:none; color:darkslateblue;">заказать звонок</a>
+                                <a style="text-decoration:none; color:darkslateblue;" data-bs-toggle="modal" data-bs-target="#requestcall" role="button"><i class="fas fa-mobile-alt"></i>&nbspЗаказать звонок</a>
                             </small>
                         </span>
                     </p>
@@ -68,13 +67,14 @@
                             <a class="nav-link active" asp-controller="Admin" asp-action="Login"><i class="fas fa-user"></i>&nbsp&nbspЛичный кабинет</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li>
-                                    <a asp-controller="Admin" asp-action="Register" class="dropdown-item" data-bs-target="#modal-register" data-bs-toggle="modal" role="button">Регистрация</a>
+                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalregister" role="button">Регистрация</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="Login"><i class="fas fa-user"></i>&nbsp&nbspВход</a>
                                 </li>
                             </ul>
                         }
+                        <partial name="Register" />
                     </div>
                 </div>
 
@@ -96,19 +96,21 @@
                     <a class="nav-link text-dark navbar-brand" asp-area="" asp-controller="Home" asp-action="Contact">Контакты</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark navbar-brand" asp-area="" asp-controller="Home" asp-action="RequestMail" data-bs-target="#modal-requestmail" data-bs-toggle="modal" role="button"><i class="fas fa-envelope-open-text"></i>Напишите нам</a>
+                    <a class="nav-link text-dark navbar-brand" data-bs-toggle="modal" data-bs-target="#requestmail" role="button"><i class="fas fa-envelope-open-text"></i>&nbspНапишите нам</a>
+                    <partial name="RequestMail" />
                 </li>
-                <li>
-                    <partial name="RequestCall2"/>
+                <li class="nav-item">
+                    <a class="nav-link text-dark navbar-brand" data-bs-toggle="modal" data-bs-target="#requestcall" role="button"><i class="fas fa-mobile-alt"></i>&nbspЗаказать звонок</a>
+                    <partial name="RequestCall" />
                 </li>
             </ul>
         </nav>
     </div>
 </header>
 
+
 <style>
     div.login .dropdown:hover > .dropdown-menu {
         display: block;
     }
 </style>
-
